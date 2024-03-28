@@ -2,6 +2,8 @@
 게임 이름 : Catch monster if you can
 2019184013 박준범
 
+<img width="335" alt="image" src="https://github.com/Junbeomb/SmartphoneGameProgram/assets/87471961/71caf06b-e194-4a83-b489-f56c1015f460">
+
 게임 컨셉
   지하 던전에 갇혀 버린 주인공
   장애물을 피하고 몬스터를 잡아서 던전을 탈출하는 게임
@@ -19,15 +21,7 @@
   일반 몬스터를 해치우고, 장애물을 피하며 -> 마지막에 보스몬스터를 무찌르면 게임이 끝난다
 <img width="839" alt="예상 게임 실행 흐름도" src="https://github.com/Junbeomb/SmartphoneGameProgram/assets/87471961/4db1584e-adfb-4fd1-a2ea-4b6b30ae1de9">
 
-개발 일정
-  1주차 기획
-  2주차 캐릭터 이동 구현
-  3주차 캐릭터 공격 구현
-  4주차 장애물 구현
-  5주차 일반 몬스터 이동 구현
-  6주차 일반 몬스터 공격 구현
-  7주차 보스 몬스터 알고리즘 구현
-  8주차 사운드 및 디테일 추가
-  9주차 전체적으로 다듬기
+
+<img width="724" alt="개발 일정" src="https://github.com/Junbeomb/SmartphoneGameProgram/assets/87471961/e44749bc-4a20-487b-8f63-74415ff3976b">
 
 
