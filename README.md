@@ -19,6 +19,8 @@
 
 예상 게임 실행 흐름
   일반 몬스터를 해치우고, 장애물을 피하며 -> 마지막에 보스몬스터를 무찌르면 게임이 끝난다
+  <img width="839" alt="예상 게임 실행 흐름도" src="https://github.com/Junbeomb/SmartphoneGameProgram/assets/87471961/bd3078ac-e107-49e7-9b54-7cddb7f27324">
+  
 <img width="724" alt="개발 일정" src="https://github.com/Junbeomb/SmartphoneGameProgram/assets/87471961/e44749bc-4a20-487b-8f63-74415ff3976b">
 
 
