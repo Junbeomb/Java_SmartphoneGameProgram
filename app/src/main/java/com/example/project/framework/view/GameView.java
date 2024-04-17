@@ -11,9 +11,10 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import com.example.project.BuildConfig;
-import com.example.project.framework.scene.Scene;
+import com.example.project.CatchMonster.BuildConfig;
 import com.example.project.framework.interfaces.IGameObject;
+import com.example.project.framework.scene.Scene;
+
 
 //import android.util.AttributeSet;
 
@@ -61,6 +62,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     //////////////////////////////////////////////////
     // Game Loop
+    private boolean running = true;
     private long previousNanos = 0;
     private float elapsedSeconds;
     private void scheduleUpdate() {
@@ -75,7 +77,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             update();
         }
         invalidate();
-        if (isShown()) {
+        if (running) {
             scheduleUpdate();
         }
         previousNanos = nanos;
@@ -104,7 +106,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
         if (BuildConfig.DEBUG) {
             int fps = (int) (1.0f / elapsedSeconds);
-            canvas.drawText("FPS: " + fps, 100f, 200f, fpsPaint);
+            int count = scene.count();
+            canvas.drawText("FPS: " + fps + " objs: " + count, 100f, 200f, fpsPaint);
         }
     }
 
@@ -150,5 +153,22 @@ public class GameView extends View implements Choreographer.FrameCallback {
         if (handled) return;
 
         Scene.pop();
+    }
+
+    public void pauseGame() {
+        running = false;
+        Scene.pauseTop();
+    }
+
+    public void resumeGame() {
+        if (running) return;
+        running = true;
+        previousNanos = 0;
+        scheduleUpdate();
+        Scene.resumeTop();
+    }
+
+    public void destroyGame() {
+        Scene.popAll();
     }
 }

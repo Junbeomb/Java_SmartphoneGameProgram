@@ -18,7 +18,7 @@
             android:label="@string/title_activity_game"
             android:theme="@style/Theme.Project" />
         <activity
-            android:name=".app.MainActivity"
+            android:name=".CatchMonster.app.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

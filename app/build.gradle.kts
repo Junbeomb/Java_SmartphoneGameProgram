@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.project"
+    namespace = "com.example.project.CatchMonster"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.project"
+        applicationId = "com.example.project.CatchMonster"
         minSdk = 27
         targetSdk = 34
         versionCode = 1
