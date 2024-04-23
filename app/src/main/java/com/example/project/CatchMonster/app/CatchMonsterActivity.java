@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.example.project.CatchMonster.game.MainScene;
 import com.example.project.framework.activity.GameActivity;
 
-public class DragonFlightActivity extends GameActivity {
+public class CatchMonsterActivity extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

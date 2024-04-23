@@ -9,11 +9,11 @@ import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.ArrayList;
-
 import com.example.project.CatchMonster.BuildConfig;
 import com.example.project.framework.interfaces.IGameObject;
 import com.example.project.framework.scene.Scene;
+
+import java.util.ArrayList;
 
 
 //import android.util.AttributeSet;
@@ -127,7 +127,6 @@ public class GameView extends View implements Choreographer.FrameCallback {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
         Metrics.onSize(w, h);
     }
 

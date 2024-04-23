@@ -3,6 +3,8 @@ package com.example.project.CatchMonster.game;
 import android.view.MotionEvent;
 
 import com.example.project.CatchMonster.R;
+import com.example.project.framework.objects.LeftButton;
+import com.example.project.framework.objects.RightButton;
 import com.example.project.framework.objects.Score;
 import com.example.project.framework.objects.VertScrollBackground;
 import com.example.project.framework.scene.Scene;
@@ -10,6 +12,7 @@ import com.example.project.framework.scene.Scene;
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
     private final Fighter fighter;
+
     Score score; // package private
 
     public enum Layer {
@@ -18,14 +21,19 @@ public class MainScene extends Scene {
     public MainScene() {
         initLayers(Layer.COUNT);
 
-        add(Layer.controller, new EnemyGenerator());
+        //add(Layer.controller, new EnemyGenerator());
         add(Layer.controller, new CollisionChecker(this));
 
         add(Layer.bg, new VertScrollBackground(R.mipmap.bg_city, 0.2f));
         add(Layer.bg, new VertScrollBackground(R.mipmap.clouds, 0.4f));
 
+        add(Layer.ui, new LeftButton(R.mipmap.arrow_left,1.f,8.f));
+        add(Layer.ui, new RightButton(R.mipmap.arrow_right,2.5f,8.f));
+
+
         this.fighter = new Fighter();
         add(Layer.player, fighter);
+
 
         this.score = new Score(R.mipmap.number_24x32, 8.5f, 0.5f, 0.6f);
         score.setScore(0);

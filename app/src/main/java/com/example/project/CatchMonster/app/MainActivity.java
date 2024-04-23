@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            startActivity(new Intent(this, DragonFlightActivity.class));
+            startActivity(new Intent(this, CatchMonsterActivity.class));
         }
         return super.onTouchEvent(event);
     }

@@ -12,6 +12,7 @@ import com.example.project.framework.scene.Scene;
 import com.example.project.framework.view.Metrics;
 
 public class Fighter extends Sprite {
+
     private static final float PLANE_WIDTH = 1.75f;
     private static final float PLANE_HEIGHT = PLANE_WIDTH * 80 / 72;
     private static final float TARGET_RADIUS = 0.5f;
@@ -33,7 +34,8 @@ public class Fighter extends Sprite {
     private float fireCoolTime = FIRE_INTERVAL;
 
     public Fighter() {
-        super(R.mipmap.fighter);
+        super(R.mipmap.hero_face);
+
         setPosition(Metrics.width / 2, Metrics.height - 3, PLANE_WIDTH, PLANE_HEIGHT);
         setTargetX(x);
 
@@ -67,6 +69,14 @@ public class Fighter extends Sprite {
             fireBullet();
             fireCoolTime = FIRE_INTERVAL;
         }
+    }
+
+    public void goLeft(){
+        targetX =  targetX - 0.2f;
+
+    }
+    public void goRight(){
+        targetX =  targetX + 0.2f;
     }
 
     private void fireBullet() {
