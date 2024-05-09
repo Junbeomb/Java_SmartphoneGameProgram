@@ -40,12 +40,22 @@ HP : 100, Attack : 50, Speed : 100
  ![번개아이콘](https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/220ea739-20ed-4f64-b4d1-6caa3d8a7b65)
  ![폭탄 아이콘](https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/454c5de0-d8d7-42a2-a9bb-001b2e8d8f6a)
 
+현재 까지의 진행 사항  
+캐릭터 20%  
+몬스터 0%  
+배경 50%  
+
 예상 게임 실행 흐름  
   일반 몬스터를 해치우고, 장애물을 피하며 -> 마지막에 보스몬스터를 무찌르면 게임이 끝난다  
   <img width="839" alt="예상 게임 실행 흐름도" src="https://github.com/Junbeomb/SmartphoneGameProgram/assets/87471961/bd3078ac-e107-49e7-9b54-7cddb7f27324">
 
 주차별 git commit 수  
-<img width="839" alt="주차별 커밋" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/c142dc08-8c10-4969-96f0-79fc8b6cfeef">
+<img width="839" alt="주차별 커밋" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/c142dc08-8c10-4969-96f0-79fc8b6cfeef">  
+
+MainScene 구성 정보  
+  Hero와 Background, 방향 키 추가
+  <img width="839" alt="주차별 커밋" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/13cf7d93-c521-4886-a203-cddc86b0535e">  
+
 
 
 
