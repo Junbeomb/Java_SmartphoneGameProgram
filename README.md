@@ -44,6 +44,9 @@ HP : 100, Attack : 50, Speed : 100
   일반 몬스터를 해치우고, 장애물을 피하며 -> 마지막에 보스몬스터를 무찌르면 게임이 끝난다  
   <img width="839" alt="예상 게임 실행 흐름도" src="https://github.com/Junbeomb/SmartphoneGameProgram/assets/87471961/bd3078ac-e107-49e7-9b54-7cddb7f27324">
 
+주차별 git commit 수  
+<img width="839" alt="주차별 커밋" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/c142dc08-8c10-4969-96f0-79fc8b6cfeef">
+
 
 
 
