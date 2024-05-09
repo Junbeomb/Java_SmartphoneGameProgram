@@ -11,7 +11,7 @@ import com.example.project.framework.scene.Scene;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
-    private final Fighter fighter;
+    private final Player player;
 
     Score score; // package private
 
@@ -24,15 +24,20 @@ public class MainScene extends Scene {
         //add(Layer.controller, new EnemyGenerator());
         add(Layer.controller, new CollisionChecker(this));
 
-        add(Layer.bg, new VertScrollBackground(R.mipmap.bg_city, 0.2f));
-        add(Layer.bg, new VertScrollBackground(R.mipmap.clouds, 0.4f));
+        add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage2bg, 0.2f));
+        //add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_floor, 0.2f));
 
-        add(Layer.ui, new LeftButton(R.mipmap.arrow_left,1.f,8.f));
-        add(Layer.ui, new RightButton(R.mipmap.arrow_right,2.5f,8.f));
+        //add(Layer.ui, new LeftButton(R.mipmap.arrow_left,1.f,8.f));
+        //add(Layer.ui, new RightButton(R.mipmap.arrow_right,2.5f,8.f));
 
 
-        this.fighter = new Fighter();
-        add(Layer.player, fighter);
+        //add(Layer.enemy, new Enemy(R.mipmap.catchmonster_herosprite,2.5f,8.f));
+        player = new Player();
+        add(Layer.player, player);
+
+
+//        this.fighter = new Fighter();
+//        add(Layer.player, fighter);
 
 
         this.score = new Score(R.mipmap.number_24x32, 8.5f, 0.5f, 0.6f);
@@ -51,6 +56,6 @@ public class MainScene extends Scene {
 
     @Override
     public boolean onTouch(MotionEvent event) {
-        return fighter.onTouch(event);
+        return player.onTouch(event);
     }
 }

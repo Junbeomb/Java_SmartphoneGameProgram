@@ -47,7 +47,7 @@ public class Metrics {
     public static float[] fromScreen(float x, float y) {
         pointsBuffer[0] = x;
         pointsBuffer[1] = y;
-        invertedMatrix.mapPoints(pointsBuffer);
+        invertedMatrix.mapPoints(pointsBuffer); //160을 1.0으로 바꾸려면 invertedMatrix 사용.
         return pointsBuffer;
     }
     public static float[] toScreen(float x, float y) {

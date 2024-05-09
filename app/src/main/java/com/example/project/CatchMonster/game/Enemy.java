@@ -14,10 +14,8 @@ public class Enemy extends AnimSprite implements IBoxCollidable, IRecyclable {
     private static final float SPEED = 3.0f;
     private static final float RADIUS = 0.9f;
     private static final int[] resIds = {
-            R.mipmap.enemy_01, R.mipmap.enemy_02, R.mipmap.enemy_03, R.mipmap.enemy_04, R.mipmap.enemy_05,
-            R.mipmap.enemy_06, R.mipmap.enemy_07, R.mipmap.enemy_08, R.mipmap.enemy_09, R.mipmap.enemy_10,
-            R.mipmap.enemy_11, R.mipmap.enemy_12, R.mipmap.enemy_13, R.mipmap.enemy_14, R.mipmap.enemy_15,
-            R.mipmap.enemy_16, R.mipmap.enemy_17, R.mipmap.enemy_18, R.mipmap.enemy_19, R.mipmap.enemy_20,    };
+            R.mipmap.enemy_01
+    };
     public static final int MAX_LEVEL = resIds.length - 1;
     public static final float ANIM_FPS = 10.0f;
     protected RectF collisionRect = new RectF();
