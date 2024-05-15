@@ -11,9 +11,11 @@ import com.example.project.framework.util.CollisionHelper;
 public class CollisionChecker implements IGameObject {
     private static final String TAG = CollisionChecker.class.getSimpleName();
     private final MainScene scene;
+    private final Player player;
 
-    public CollisionChecker(MainScene scene) {
+    public CollisionChecker(MainScene scene, Player player) {
         this.scene = scene;
+        this.player = player;
     }
 
     @Override

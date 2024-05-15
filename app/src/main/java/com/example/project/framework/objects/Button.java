@@ -1,10 +1,9 @@
-package kr.ac.tukorea.ge.spgp2024.framework.objects;
+package com.example.project.framework.objects;
 
-import android.util.Log;
 import android.view.MotionEvent;
 
-import kr.ac.tukorea.ge.spgp2024.framework.interfaces.ITouchable;
-import kr.ac.tukorea.ge.spgp2024.framework.view.Metrics;
+import com.example.project.framework.interfaces.ITouchable;
+import com.example.project.framework.view.Metrics;
 
 public class Button extends Sprite implements ITouchable {
     public enum Action {

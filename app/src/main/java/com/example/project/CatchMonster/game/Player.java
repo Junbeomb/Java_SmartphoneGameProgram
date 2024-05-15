@@ -14,6 +14,9 @@ public class Player extends SheetSprite {
 
     public float heroSpeed = 0.1f;
     protected float dx = 5.f;
+
+    protected boolean goLeft = false;
+    protected boolean goRight = false;
     protected Rect[][] srcRectsArray = {
             makeRects(101, 103, 105), // State.running
             makeRects(7, 8),               // State.jump
@@ -43,11 +46,34 @@ public class Player extends SheetSprite {
     }
     @Override
     public void update(float elapsedSeconds) {
-        dx = dx + heroSpeed;
-        setPosition(dx, 6.0f, 2.0f, 2.0f);
 
-        if(heroSpeed>0.f){
+        if(goLeft){
+            heroSpeed = -0.1f;
+            dx = dx + heroSpeed;
+            setPosition(dx, 6.0f, 2.0f, 2.0f);
+        }
+        if(goRight){
+            heroSpeed = 0.1f;
+            dx = dx + heroSpeed;
+            setPosition(dx, 6.0f, 2.0f, 2.0f);
+        }
 
+    }
+
+    public void leftMove(boolean StartLeft){
+        if(StartLeft){
+            goLeft = true;
+        }
+        else{
+            goLeft = false;
+        }
+    }
+    public void rightMove(boolean StartLeft){
+        if(StartLeft){
+            goRight = true;
+        }
+        else{
+            goRight = false;
         }
     }
     public void jump() {
@@ -62,7 +88,7 @@ public class Player extends SheetSprite {
 //        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 //            jump();
 //        }
-        heroSpeed = -1 * heroSpeed;
+        //heroSpeed = -1 * heroSpeed;
         return false;
     }
 }

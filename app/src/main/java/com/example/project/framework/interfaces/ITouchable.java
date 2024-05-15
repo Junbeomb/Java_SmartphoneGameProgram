@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.spgp2024.framework.interfaces;
+package com.example.project.framework.interfaces;
 
 import android.view.MotionEvent;
 

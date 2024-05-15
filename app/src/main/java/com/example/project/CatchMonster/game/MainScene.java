@@ -1,10 +1,13 @@
 package com.example.project.CatchMonster.game;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.example.project.CatchMonster.R;
-import com.example.project.framework.objects.LeftButton;
-import com.example.project.framework.objects.RightButton;
+import com.example.project.framework.activity.GameActivity;
+import com.example.project.framework.objects.Button;
 import com.example.project.framework.objects.Score;
 import com.example.project.framework.objects.VertScrollBackground;
 import com.example.project.framework.scene.Scene;
@@ -16,13 +19,13 @@ public class MainScene extends Scene {
     Score score; // package private
 
     public enum Layer {
-        bg, enemy, bullet, player, ui, controller, COUNT
+        bg, enemy, bullet, player, ui,touch, controller, COUNT
     }
     public MainScene() {
+
         initLayers(Layer.COUNT);
 
         //add(Layer.controller, new EnemyGenerator());
-        add(Layer.controller, new CollisionChecker(this));
 
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage2bg, 0.2f));
         //add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_floor, 0.2f));
@@ -30,10 +33,34 @@ public class MainScene extends Scene {
         //add(Layer.ui, new LeftButton(R.mipmap.arrow_left,1.f,8.f));
         //add(Layer.ui, new RightButton(R.mipmap.arrow_right,2.5f,8.f));
 
-
-        //add(Layer.enemy, new Enemy(R.mipmap.catchmonster_herosprite,2.5f,8.f));
         player = new Player();
         add(Layer.player, player);
+
+        add(Layer.controller, new CollisionChecker(this, player));
+
+
+        //Log.d(TAG, "Button: Slide " + action);
+
+        add(Layer.touch, new Button(R.mipmap.arrow_left, 1.5f, 8.0f, 2.0f, 0.75f, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                Log.d(TAG, "left");
+                player.leftMove(action == Button.Action.pressed);
+                return true;
+            }
+        }));
+        add(Layer.touch, new Button(R.mipmap.arrow_right, 3.5f, 8.0f, 2.0f, 0.75f, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                Log.d(TAG, "Button: Slide " + action);
+                player.rightMove(action == Button.Action.pressed);
+                return true;
+            }
+        }));
+
+
+        //add(Layer.enemy, new Enemy(R.mipmap.catchmonster_herosprite,2.5f,8.f));
+
 
 
 //        this.fighter = new Fighter();
@@ -45,6 +72,10 @@ public class MainScene extends Scene {
         add(Layer.ui, score);
     }
 
+    protected int getTouchLayerIndex() {
+        return Layer.touch.ordinal();
+    }
+
     public void addScore(int amount) {
         score.add(amount);
     }
@@ -54,8 +85,5 @@ public class MainScene extends Scene {
         super.update(elapsedSeconds);
     }
 
-    @Override
-    public boolean onTouch(MotionEvent event) {
-        return player.onTouch(event);
-    }
+
 }
