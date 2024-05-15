@@ -50,7 +50,12 @@ HP : 100, Attack : 50, Speed : 100
   <img width="839" alt="예상 게임 실행 흐름도" src="https://github.com/Junbeomb/SmartphoneGameProgram/assets/87471961/bd3078ac-e107-49e7-9b54-7cddb7f27324">
 
 주차별 git commit 수  
+<<<<<<< HEAD
 <img width="839" alt="주차별 커밋" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/4269d21d-c48a-451e-9a17-baa40c8f6957">  
+=======
+<img width="400" alt="commite" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/dddf495a-9514-48c2-8308-9f54029b987a">
+<img width="839" alt="주차별 커밋" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/c142dc08-8c10-4969-96f0-79fc8b6cfeef">  
+>>>>>>> 5c2a46bb25b763799a1ee00230ea0d2a186258fe
 
 MainScene 구성 정보  
   Hero와 Background, 방향 키 추가

@@ -41,7 +41,7 @@ public class Player extends SheetSprite {
     }
     public Player() {
         super(R.mipmap.catchmonster_herosprite, 8);
-        setPosition(dx, 6.0f, 2.0f, 2.0f);
+        setPosition(dx, 6.5f, 2.0f, 2.0f);
         srcRects = srcRectsArray[state.ordinal()];
     }
     @Override
@@ -50,12 +50,12 @@ public class Player extends SheetSprite {
         if(goLeft){
             heroSpeed = -0.1f;
             dx = dx + heroSpeed;
-            setPosition(dx, 6.0f, 2.0f, 2.0f);
+            setPosition(dx, 6.5f, 2.0f, 2.0f);
         }
         if(goRight){
             heroSpeed = 0.1f;
             dx = dx + heroSpeed;
-            setPosition(dx, 6.0f, 2.0f, 2.0f);
+            setPosition(dx, 6.5f, 2.0f, 2.0f);
         }
 
     }

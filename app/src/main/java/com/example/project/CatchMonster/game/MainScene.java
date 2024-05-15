@@ -38,10 +38,12 @@ public class MainScene extends Scene {
 
         add(Layer.controller, new CollisionChecker(this, player));
 
+        add(Layer.enemy, new Enemy());
+
 
         //Log.d(TAG, "Button: Slide " + action);
 
-        add(Layer.touch, new Button(R.mipmap.arrow_left, 1.5f, 8.0f, 2.0f, 0.75f, new Button.Callback() {
+        add(Layer.touch, new Button(R.mipmap.arrow_left, 1.5f, 8.3f, 2.0f, 0.75f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
                 Log.d(TAG, "left");
@@ -49,7 +51,7 @@ public class MainScene extends Scene {
                 return true;
             }
         }));
-        add(Layer.touch, new Button(R.mipmap.arrow_right, 3.5f, 8.0f, 2.0f, 0.75f, new Button.Callback() {
+        add(Layer.touch, new Button(R.mipmap.arrow_right, 3.5f, 8.3f, 2.0f, 0.75f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
                 Log.d(TAG, "Button: Slide " + action);
