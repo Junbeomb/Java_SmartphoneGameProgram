@@ -48,11 +48,13 @@ public class Player extends SheetSprite {
     public void update(float elapsedSeconds) {
 
         if(goLeft){
+            srcRects = makeRects(100, 101, 102);
             heroSpeed = -0.1f;
             dx = dx + heroSpeed;
             setPosition(dx, 6.5f, 2.0f, 2.0f);
         }
         if(goRight){
+            srcRects = makeRects(100, 101, 102);
             heroSpeed = 0.1f;
             dx = dx + heroSpeed;
             setPosition(dx, 6.5f, 2.0f, 2.0f);

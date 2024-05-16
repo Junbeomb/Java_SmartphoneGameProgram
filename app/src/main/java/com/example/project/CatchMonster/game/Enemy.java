@@ -18,6 +18,8 @@ public class Enemy extends SheetSprite {
     public float monsterSpeed = 0.05f;
     protected float dx = 5.f;
 
+    protected double direction = 0.1f;
+    protected float enemySpeed = 0.1f;
     protected Rect[][] srcRectsArray = {
             makeRects(100, 101, 102), // State.running
             makeRects(7, 8),               // State.jump
@@ -28,20 +30,47 @@ public class Enemy extends SheetSprite {
         Rect[] rects = new Rect[indices.length];
         for (int i = 0; i < indices.length; i++) {
             int idx = indices[i];
-            int l = (idx % 100) * 110 + 0;
-            int t = 22;
+            int l = (idx % 100) * 107 + 8;
+            int t = 23;
 
-            rects[i] = new Rect(l+105 , t, l, t + 130);
+            if(direction > 0.f)
+                rects[i] = new Rect(l , t, l+101, t + 127);
+            else
+                rects[i] = new Rect(l+101, t, l, t + 127);
         }
         return rects;
     }
     public Enemy() {
         super(R.mipmap.catchmonster_monster1, 8);
+
+        direction = Math.random();
+        if(direction > 0.5f) direction = -0.1f;
+        else direction = 0.1f;
+
         setPosition(6.5f, 6.5f, 2.0f, 2.0f);
         srcRects = srcRectsArray[0];
     }
     @Override
     public void update(float elapsedSeconds) {
+
+        if(direction > 0.f){
+            dx = dx + (float)direction;
+            setPosition(dx, 6.5f, 2.0f, 2.0f);
+
+            if(dx >= 16.f){
+                srcRects = makeRects(100, 101, 102);
+                direction = -0.1f;
+            }
+        }
+        else{
+            dx = dx + (float)direction;
+            setPosition(dx,6.5f,2.0f,2.0f);
+
+            if(dx <= 0.f){
+                srcRects = makeRects(100, 101, 102);
+                direction = 0.1f;
+            }
+        }
 
     }
 }
