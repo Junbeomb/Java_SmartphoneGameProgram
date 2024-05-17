@@ -17,6 +17,7 @@ public class Player extends SheetSprite {
 
     protected boolean goLeft = false;
     protected boolean goRight = false;
+    protected boolean goAttack = false;
     protected Rect[][] srcRectsArray = {
             makeRects(101, 103, 105), // State.running
             makeRects(7, 8),               // State.jump
@@ -28,7 +29,7 @@ public class Player extends SheetSprite {
         for (int i = 0; i < indices.length; i++) {
             int idx = indices[i];
             int l = (idx % 100) * 100;
-            int t = 0;
+            int t = ((idx/100)-1) * 100;
 
             if(heroSpeed > 0.f){
                 rects[i] = new Rect(l, t, l + 100, t + 90);
@@ -59,6 +60,10 @@ public class Player extends SheetSprite {
             dx = dx + heroSpeed;
             setPosition(dx, 6.5f, 2.0f, 2.0f);
         }
+        if(goAttack){
+            srcRects = makeRects(200, 201, 202, 203, 204);
+            goAttack = false;
+        }
 
     }
 
@@ -76,6 +81,16 @@ public class Player extends SheetSprite {
         }
         else{
             goRight = false;
+        }
+    }
+
+    public void attack(boolean startAttack){
+        if(startAttack){
+            goAttack = true;
+        }
+        else{
+            goAttack = false;
+            srcRects = makeRects(300);
         }
     }
     public void jump() {

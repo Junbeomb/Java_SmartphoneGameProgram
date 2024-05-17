@@ -17,9 +17,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc6b8f13-880e-4662-b26f-2f57f28a68ee" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/attack_button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/catchmonster_herosprite.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project/CatchMonster/game/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project/CatchMonster/game/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project/CatchMonster/game/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project/CatchMonster/game/MainScene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project/CatchMonster/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project/CatchMonster/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/catchmonster_herosprite.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,16 +86,16 @@
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "E:/SmartphoneProgram/Project"
+    "last_opened_file_path": "E:/SmartphoneProgram/Project/app/src/main/res/mipmap-xxxhdpi"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\SmartphoneProgram\Project\app\src\main\res\mipmap-xxxhdpi" />
       <recent name="E:\SmartphoneProgram\Project\app\src\main\res\mipmap-hdpi" />
       <recent name="E:\AndroidStudioProjects\Project\app\src\main\res\mipmap-hdpi" />
       <recent name="E:\AndroidStudioProjects\Project\app\src\main\res\mipmap-xxxhdpi" />
       <recent name="E:\AndroidStudioProjects\Project\app\src\main\res\mipmap-xhdpi" />
-      <recent name="E:\SmartphoneProgram\Project\app\src\main\res\mipmap-xxxhdpi" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\AndroidStudioProjects\Project\app\src\main\res\mipmap-xxxhdpi" />

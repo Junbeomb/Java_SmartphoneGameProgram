@@ -46,7 +46,7 @@ public class MainScene extends Scene {
         add(Layer.touch, new Button(R.mipmap.arrow_left, 1.5f, 8.3f, 2.0f, 0.75f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
-                Log.d(TAG, "left");
+                //Log.d(TAG, "left");
                 player.leftMove(action == Button.Action.pressed);
                 return true;
             }
@@ -54,8 +54,17 @@ public class MainScene extends Scene {
         add(Layer.touch, new Button(R.mipmap.arrow_right, 3.5f, 8.3f, 2.0f, 0.75f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
-                Log.d(TAG, "Button: Slide " + action);
+                //Log.d(TAG, "Button: Slide " + action);
                 player.rightMove(action == Button.Action.pressed);
+                return true;
+            }
+        }));
+
+        add(Layer.touch, new Button(R.mipmap.attack_button, 10.5f, 8.3f, 2.0f, 2.0f, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                Log.d(TAG, "Button: Slide " + action);
+                player.attack(action == Button.Action.pressed);
                 return true;
             }
         }));
