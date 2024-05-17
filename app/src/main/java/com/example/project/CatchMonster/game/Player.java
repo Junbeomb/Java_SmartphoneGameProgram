@@ -1,23 +1,31 @@
 package com.example.project.CatchMonster.game;
 
 import android.graphics.Rect;
+import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.example.project.CatchMonster.R;
+import com.example.project.framework.interfaces.IBoxCollidable;
 import com.example.project.framework.objects.SheetSprite;
 
-public class Player extends SheetSprite {
+public class Player extends SheetSprite implements IBoxCollidable {
+    private static final String TAG = CollisionChecker.class.getSimpleName();
     public enum State {
-        running, jump, doubleJump, falling, COUNT
+        idle,goLeft,goRight,attack,hurt,invincibility
     }
-    protected State state = State.running;
+
+    private final RectF collisionRect = new RectF();
+    protected State state = State.idle;
 
     public float heroSpeed = 0.1f;
     protected float dx = 5.f;
 
-    protected boolean goLeft = false;
-    protected boolean goRight = false;
-    protected boolean goAttack = false;
+
+    protected float attackTime = 0.f;
+    protected float hurtTime = 0.f;
+    protected boolean invincibility = false;
+    protected float invincibilityTime = 0.f;
     protected Rect[][] srcRectsArray = {
             makeRects(101, 103, 105), // State.running
             makeRects(7, 8),               // State.jump
@@ -45,67 +53,97 @@ public class Player extends SheetSprite {
         setPosition(dx, 6.5f, 2.0f, 2.0f);
         srcRects = srcRectsArray[state.ordinal()];
     }
+
+    private void setState(State state) {
+        this.state = state;
+    }
+
     @Override
     public void update(float elapsedSeconds) {
 
-        if(goLeft){
-            srcRects = makeRects(100, 101, 102);
-            heroSpeed = -0.1f;
-            dx = dx + heroSpeed;
-            setPosition(dx, 6.5f, 2.0f, 2.0f);
+        switch(state){
+            case idle:
+                srcRects = makeRects(100);
+                break;
+            case goLeft:
+                srcRects = makeRects(101, 103, 105);
+                heroSpeed = -0.1f;
+                dx = dx + heroSpeed;
+                setPosition(dx, 6.5f, 2.0f, 2.0f);
+                break;
+            case goRight:
+                srcRects = makeRects(101, 103, 105);
+                heroSpeed = 0.1f;
+                dx = dx + heroSpeed;
+                setPosition(dx, 6.5f, 2.0f, 2.0f);
+                break;
+            case attack:
+                attackTime = attackTime + elapsedSeconds;
+                srcRects = makeRects(200, 201, 202, 203, 204);
+                if(attackTime > 0.4f){
+                    attackTime = 0.f;
+                    setState(State.idle);
+                }
+                break;
+            case hurt:
+                hurtTime = hurtTime + elapsedSeconds;
+                Log.d(TAG, "Collision !!");
+                srcRects = makeRects(204);
+                if(hurtTime > 0.5f){
+                    invincibility = true;//무적 상태 변환
+                    hurtTime = 0.f;
+                    setState(State.idle);
+                }
+                break;
         }
-        if(goRight){
-            srcRects = makeRects(100, 101, 102);
-            heroSpeed = 0.1f;
-            dx = dx + heroSpeed;
-            setPosition(dx, 6.5f, 2.0f, 2.0f);
-        }
-        if(goAttack){
-            srcRects = makeRects(200, 201, 202, 203, 204);
-            goAttack = false;
+
+        if(invincibility){ //1초간 무적
+            invincibilityTime = invincibilityTime + elapsedSeconds;
+            if(invincibilityTime > 1.0f){
+                invincibilityTime = 0.f;
+                invincibility = false;
+            }
         }
 
     }
 
     public void leftMove(boolean StartLeft){
+        if(state == State.hurt) return;
+
         if(StartLeft){
-            goLeft = true;
+            setState(State.goLeft);
         }
         else{
-            goLeft = false;
+            setState(State.idle);
         }
     }
     public void rightMove(boolean StartLeft){
+        if(state == State.hurt) return;
+
         if(StartLeft){
-            goRight = true;
+            setState(State.goRight);
         }
         else{
-            goRight = false;
+            setState(State.idle);
         }
     }
 
     public void attack(boolean startAttack){
+        if(state == State.hurt || state == State.attack ) return;
+
         if(startAttack){
-            goAttack = true;
-        }
-        else{
-            goAttack = false;
-            srcRects = makeRects(300);
+            setState(State.attack);
         }
     }
-    public void jump() {
-        int ord = state.ordinal() + 1;
-        if (ord == State.COUNT.ordinal()) {
-            ord = 0;
-        }
-        state = State.values()[ord]; // int 로부터 enum 만들기
-        srcRects = srcRectsArray[ord];
+
+    public void hurt(){
+        if(state == State.hurt || invincibility) return;
+
+        setState(State.hurt);
     }
-    public boolean onTouch(MotionEvent event) {
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            jump();
-//        }
-        //heroSpeed = -1 * heroSpeed;
-        return false;
+
+    @Override
+    public RectF getCollisionRect() {
+        return dstRect;
     }
 }

@@ -14,7 +14,7 @@ import com.example.project.framework.scene.RecycleBin;
 import com.example.project.framework.scene.Scene;
 import com.example.project.framework.view.Metrics;
 
-public class Enemy extends SheetSprite {
+public class Enemy extends SheetSprite implements IBoxCollidable{
     public float monsterSpeed = 0.05f;
     protected float dx = 5.f;
 
@@ -73,4 +73,10 @@ public class Enemy extends SheetSprite {
         }
 
     }
+
+    @Override
+    public RectF getCollisionRect() {
+        return dstRect;
+    }
+
 }

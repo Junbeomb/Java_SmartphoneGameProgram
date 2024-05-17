@@ -23,14 +23,11 @@ public class CollisionChecker implements IGameObject {
         ArrayList<IGameObject> enemies = scene.objectsAt(MainScene.Layer.enemy);
         for (int e = enemies.size() - 1; e >= 0; e--) {
             Enemy enemy = (Enemy)enemies.get(e);
-            ArrayList<IGameObject> bullets = scene.objectsAt(MainScene.Layer.bullet);
-            for (int b = bullets.size() - 1; b >= 0; b--) {
-                    Bullet bullet = (Bullet)bullets.get(b);
-                if (CollisionHelper.collides(enemy, bullet)) {
-                    Log.d(TAG, "Collision !!");
-                    scene.remove(MainScene.Layer.enemy, enemy);
-                    break;
-                }
+            if (CollisionHelper.collides(player, enemy)) {
+                Log.d(TAG, "Collision !!");
+                player.hurt();
+                //scene.remove(MainScene.Layer.enemy, enemy);
+                break;
             }
         }
     }
