@@ -7,13 +7,19 @@ import android.view.MotionEvent;
 
 import com.example.project.CatchMonster.R;
 import com.example.project.framework.interfaces.IBoxCollidable;
+import com.example.project.framework.interfaces.IGameObject;
 import com.example.project.framework.objects.SheetSprite;
+import com.example.project.framework.objects.UI;
+
+import java.util.ArrayList;
 
 public class Player extends SheetSprite implements IBoxCollidable {
     private static final String TAG = CollisionChecker.class.getSimpleName();
     public enum State {
-        idle,goLeft,goRight,attack,hurt,invincibility
+        idle,goLeft,goRight,attack,hurt,invincibility,die
     }
+
+    public int heart = 3;
 
     private final RectF collisionRect = new RectF();
     protected State state = State.idle;
@@ -61,6 +67,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
     @Override
     public void update(float elapsedSeconds) {
 
+
         switch(state){
             case idle:
                 srcRects = makeRects(100);
@@ -95,6 +102,9 @@ public class Player extends SheetSprite implements IBoxCollidable {
                     setState(State.idle);
                 }
                 break;
+            case die:
+                srcRects = makeRects(400, 401, 402);
+                break;
         }
 
         if(invincibility){ //1초간 무적
@@ -108,7 +118,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
     }
 
     public void leftMove(boolean StartLeft){
-        if(state == State.hurt) return;
+        if(state == State.hurt || state == State.die) return;
 
         if(StartLeft){
             setState(State.goLeft);
@@ -118,7 +128,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
         }
     }
     public void rightMove(boolean StartLeft){
-        if(state == State.hurt) return;
+        if(state == State.hurt|| state == State.die) return;
 
         if(StartLeft){
             setState(State.goRight);
@@ -129,15 +139,33 @@ public class Player extends SheetSprite implements IBoxCollidable {
     }
 
     public void attack(boolean startAttack){
-        if(state == State.hurt || state == State.attack ) return;
+        if(state == State.hurt || state == State.attack|| state == State.die ) return;
 
         if(startAttack){
             setState(State.attack);
         }
     }
 
-    public void hurt(){
-        if(state == State.hurt || invincibility) return;
+    public void hurt(MainScene scene){
+        if(state == State.hurt || invincibility || state == State.die) return;
+
+        ArrayList<IGameObject> heartUi = scene.objectsAt(MainScene.Layer.ui);
+
+        for (int u = heartUi.size() - 1; u >= 0; u--){
+            if(u == this.heart-1){
+                UI uih = (UI)heartUi.get(u);
+                scene.remove(MainScene.Layer.ui,uih);
+                break;
+            }
+        }
+
+        this.heart = this.heart -1;
+
+        if(this.heart <= 0){
+            setState(State.die);
+            return;
+        }
+
 
         setState(State.hurt);
     }

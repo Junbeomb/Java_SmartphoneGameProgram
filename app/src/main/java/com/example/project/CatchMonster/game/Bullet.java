@@ -15,9 +15,9 @@ public class Bullet extends Sprite implements IBoxCollidable, IRecyclable {
     private static final float SPEED = 20.0f;
 
     private Bullet(float x, float y) {
-        super(R.mipmap.laser_1);
-        setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
-        dy = -SPEED;
+        super(R.mipmap.arrow_left);
+        //setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
+        //dy = -SPEED;
     }
     public static Bullet get(float x, float y) {
         Bullet bullet = (Bullet) RecycleBin.get(Bullet.class);
