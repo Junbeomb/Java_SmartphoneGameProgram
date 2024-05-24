@@ -18,7 +18,7 @@ public class MainScene extends Scene {
     private final Player player;
 
     public enum Layer {
-        bg, enemy, bullet, player, ui,touch, controller, COUNT
+        bg, enemy, bullet, player, ui,touch, controller, COUNT, SWORDBOX
     }
     public MainScene() {
 
@@ -32,12 +32,13 @@ public class MainScene extends Scene {
         //add(Layer.ui, new LeftButton(R.mipmap.arrow_left,1.f,8.f));
         //add(Layer.ui, new RightButton(R.mipmap.arrow_right,2.5f,8.f));
 
-        player = new Player();
+        player = new Player(this);
         add(Layer.player, player);
 
         add(Layer.controller, new CollisionChecker(this, player));
 
         add(Layer.enemy, new Enemy());
+
 
 
         for(int i=0;i<player.heart;i = i+1){
@@ -60,16 +61,15 @@ public class MainScene extends Scene {
                 return true;
             }
         }));
-
         add(Layer.touch, new Button(R.mipmap.attack_button, 10.5f, 8.3f, 2.0f, 2.0f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
-                Log.d(TAG, "Button: Slide " + action);
+                //Log.d(TAG, "Button: Slide " + action);
                 player.attack(action == Button.Action.pressed);
+                add(Layer.bullet, new SwordBox(player.dx,6.5f));
                 return true;
             }
         }));
-
     }
 
     protected int getTouchLayerIndex() {

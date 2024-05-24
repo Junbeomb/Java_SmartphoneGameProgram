@@ -24,9 +24,10 @@ public class Player extends SheetSprite implements IBoxCollidable {
     private final RectF collisionRect = new RectF();
     protected State state = State.idle;
 
+    private final MainScene scene;
+
     public float heroSpeed = 0.1f;
     protected float dx = 5.f;
-
 
     protected float attackTime = 0.f;
     protected float hurtTime = 0.f;
@@ -54,8 +55,9 @@ public class Player extends SheetSprite implements IBoxCollidable {
         }
         return rects;
     }
-    public Player() {
+    public Player(MainScene scene) {
         super(R.mipmap.catchmonster_herosprite, 8);
+        this.scene = scene;
         setPosition(dx, 6.5f, 2.0f, 2.0f);
         srcRects = srcRectsArray[state.ordinal()];
     }
@@ -95,7 +97,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
             case hurt:
                 hurtTime = hurtTime + elapsedSeconds;
                 Log.d(TAG, "Collision !!");
-                srcRects = makeRects(204);
+                srcRects = makeRects(204,205);
                 if(hurtTime > 0.5f){
                     invincibility = true;//무적 상태 변환
                     hurtTime = 0.f;
@@ -142,8 +144,10 @@ public class Player extends SheetSprite implements IBoxCollidable {
         if(state == State.hurt || state == State.attack|| state == State.die ) return;
 
         if(startAttack){
+            //scene.add(MainScene.Layer.swordbox, new SwordBox(dx+0.1f,6.5f));
             setState(State.attack);
         }
+
     }
 
     public void hurt(MainScene scene){
