@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.example.project.CatchMonster.game.StageTwoScene;
 import com.example.project.CatchMonster.R;
 import com.example.project.framework.activity.GameActivity;
+import com.example.project.framework.interfaces.IGameObject;
 import com.example.project.framework.objects.Button;
 import com.example.project.framework.objects.Score;
 import com.example.project.framework.objects.UI;
 import com.example.project.framework.objects.VertScrollBackground;
 import com.example.project.framework.scene.Scene;
+
+import java.util.ArrayList;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
@@ -32,7 +36,7 @@ public class MainScene extends Scene {
         //add(Layer.ui, new LeftButton(R.mipmap.arrow_left,1.f,8.f));
         //add(Layer.ui, new RightButton(R.mipmap.arrow_right,2.5f,8.f));
 
-        player = new Player(this);
+        player = new Player();
         add(Layer.player, player);
 
         add(Layer.controller, new CollisionChecker(this, player));
@@ -79,7 +83,10 @@ public class MainScene extends Scene {
 
     @Override
     public void update(float elapsedSeconds) {
+
         super.update(elapsedSeconds);
+
+
     }
 
 

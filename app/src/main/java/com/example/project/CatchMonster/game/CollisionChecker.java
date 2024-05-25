@@ -16,8 +16,10 @@ public class CollisionChecker implements IGameObject {
     private final MainScene scene;
     private final Player player;
 
-    public CollisionChecker(MainScene scene, Player player) {
-        this.scene = scene;
+    private boolean sceneChange = false;
+
+    public CollisionChecker(Scene scene, Player player) {
+        this.scene = (MainScene)scene;
         this.player = player;
     }
 
@@ -42,9 +44,17 @@ public class CollisionChecker implements IGameObject {
                     scene.remove(MainScene.Layer.enemy, enemy);
                     break;
                 }
-
             }
         }
+
+        if(enemies.size() <= 0){
+            sceneChange = true;
+        }
+        if(sceneChange){
+            sceneChange = false;
+            new StageTwoScene().push();
+        }
+
     }
 
     @Override

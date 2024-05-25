@@ -24,7 +24,6 @@ public class Player extends SheetSprite implements IBoxCollidable {
     private final RectF collisionRect = new RectF();
     protected State state = State.idle;
 
-    private final MainScene scene;
 
     public float heroSpeed = 0.1f;
     protected float dx = 5.f;
@@ -55,9 +54,8 @@ public class Player extends SheetSprite implements IBoxCollidable {
         }
         return rects;
     }
-    public Player(MainScene scene) {
+    public Player() {
         super(R.mipmap.catchmonster_herosprite, 8);
-        this.scene = scene;
         setPosition(dx, 6.5f, 2.0f, 2.0f);
         srcRects = srcRectsArray[state.ordinal()];
     }
