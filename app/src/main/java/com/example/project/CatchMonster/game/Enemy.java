@@ -18,10 +18,13 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
     public float monsterSpeed = 0.05f;
     protected float dx = 5.f;
 
+    protected float maxHp = 100.f;
+    protected float currentHp = 100.f;
+    protected boolean deathToggle = false;
     protected double direction = 0.1f;
     protected float enemySpeed = 0.1f;
     protected Rect[][] srcRectsArray = {
-            makeRects(100, 101, 102), // State.running
+            makeRects(100, 101, 102, 103), // State.running
             makeRects(7, 8),               // State.jump
             makeRects(1, 2, 3, 4),         // State.doubleJump
             makeRects(0),                  // State.falling
@@ -30,18 +33,21 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         Rect[] rects = new Rect[indices.length];
         for (int i = 0; i < indices.length; i++) {
             int idx = indices[i];
-            int l = (idx % 100) * 107 + 8;
-            int t = 23;
+            int l = (idx % 100) * 100;
+            int t = ((idx/100)-1) * 100;
 
             if(direction > 0.f)
-                rects[i] = new Rect(l , t, l+101, t + 127);
+                rects[i] = new Rect(l , t, l+100, t + 100);
             else
-                rects[i] = new Rect(l+101, t, l, t + 127);
+                rects[i] = new Rect(l+100, t, l, t + 100);
         }
         return rects;
     }
     public Enemy() {
         super(R.mipmap.catchmonster_monster1, 8);
+
+        currentHp = maxHp;
+        deathToggle = false;
 
         direction = Math.random();
         if(direction > 0.5f) direction = -0.1f;
@@ -53,25 +59,37 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
     @Override
     public void update(float elapsedSeconds) {
 
-        if(direction > 0.f){
-            dx = dx + (float)direction;
-            setPosition(dx, 6.5f, 2.0f, 2.0f);
+        if(!deathToggle){
+            if(direction > 0.f){
+                dx = dx + (float)direction;
+                setPosition(dx, 6.5f, 2.0f, 2.0f);
 
-            if(dx >= 16.f){
-                srcRects = makeRects(100, 101, 102);
-                direction = -0.1f;
+                if(dx >= 16.f){
+                    srcRects = makeRects(100, 101, 102, 103);
+                    direction = -0.1f;
+                }
+            }
+            else{
+                dx = dx + (float)direction;
+                setPosition(dx,6.5f,2.0f,2.0f);
+
+                if(dx <= 0.f){
+                    srcRects = makeRects(100, 101, 102, 103);
+                    direction = 0.1f;
+                }
             }
         }
         else{
-            dx = dx + (float)direction;
-            setPosition(dx,6.5f,2.0f,2.0f);
-
-            if(dx <= 0.f){
-                srcRects = makeRects(100, 101, 102);
-                direction = 0.1f;
-            }
+            //srcRects = makeRects(200, 201, 202, 203, 204, 205, 206, 207);
         }
+    }
 
+    public void receiveDamage(float damageAmount){
+        currentHp = currentHp - damageAmount;
+        if(currentHp <= 0){
+            srcRects = makeRects(200, 201, 202, 203, 204, 205, 206, 207);
+            deathToggle = true;
+        }
     }
 
     @Override

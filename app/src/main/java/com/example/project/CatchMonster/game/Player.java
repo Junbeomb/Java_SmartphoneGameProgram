@@ -144,8 +144,6 @@ public class Player extends SheetSprite implements IBoxCollidable {
 
         if(startAttack){
             //scene.add(MainScene.Layer.swordbox, new SwordBox(dx+0.1f,6.5f));
-
-
             setState(State.attack);
         }
 
