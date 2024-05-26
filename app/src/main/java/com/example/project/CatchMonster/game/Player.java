@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.example.project.CatchMonster.R;
+import com.example.project.CatchMonster.app.CatchMonsterActivity;
 import com.example.project.framework.interfaces.IBoxCollidable;
 import com.example.project.framework.interfaces.IGameObject;
 import com.example.project.framework.objects.SheetSprite;
@@ -143,6 +144,8 @@ public class Player extends SheetSprite implements IBoxCollidable {
 
         if(startAttack){
             //scene.add(MainScene.Layer.swordbox, new SwordBox(dx+0.1f,6.5f));
+
+
             setState(State.attack);
         }
 

@@ -12,4 +12,5 @@ public class CatchMonsterActivity extends GameActivity {
         super.onCreate(savedInstanceState);
         new MainScene().push();
     }
+
 }
