@@ -103,18 +103,30 @@ public class MainScene extends Scene {
     public void StageOneStart(){
 
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage2bg, 0.2f));
-        add(Layer.enemy, new Enemy(this));
 
-        ArrayList<IGameObject> enemies = this.objectsAt(MainScene.Layer.enemy);
-        remainMonster = enemies.size();
+        int monsterCount = 1;
+        for(int i=0;i<monsterCount;i++){
+            add(Layer.enemy, new Enemy(this));
+        }
+        remainMonster = monsterCount;
     }
 
     public void StageTwoStart(){
-        add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage3bg, 0.2f));
-        add(Layer.enemy, new Enemy(this));
 
+        //그 전의 enemy 모두 제거
         ArrayList<IGameObject> enemies = this.objectsAt(MainScene.Layer.enemy);
-        remainMonster = enemies.size();
+        for(int i=enemies.size()-1;i>=0;i--){
+            Enemy enemy = (Enemy)enemies.get(i);
+            this.remove(MainScene.Layer.enemy, enemy);
+        }
+
+        add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage3bg, 0.2f));
+
+        int monsterCount = 1;
+        for(int i=0;i<monsterCount;i++){
+            add(Layer.enemy, new Enemy(this));
+        }
+        remainMonster = monsterCount;
     }
 
 
