@@ -22,7 +22,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
 
     public int heart = 3;
 
-    private final RectF collisionRect = new RectF();
+    private RectF collisionRect = new RectF();
     protected State state = State.idle;
 
 
@@ -116,6 +116,15 @@ public class Player extends SheetSprite implements IBoxCollidable {
             }
         }
 
+        fixCollisionRect();
+    }
+
+    private void fixCollisionRect() {
+        collisionRect.set(
+                dstRect.left + 0.6f,
+                dstRect.top + 0.3f,
+                dstRect.right - 0.6f,
+                dstRect.bottom - 0.2f);
     }
 
     public void leftMove(boolean StartLeft){
@@ -175,6 +184,6 @@ public class Player extends SheetSprite implements IBoxCollidable {
 
     @Override
     public RectF getCollisionRect() {
-        return dstRect;
+        return collisionRect;
     }
 }

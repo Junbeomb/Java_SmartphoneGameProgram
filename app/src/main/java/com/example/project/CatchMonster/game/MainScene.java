@@ -55,7 +55,7 @@ public class MainScene extends Scene {
             public boolean onTouch(Button.Action action) {
                 //Log.d(TAG, "Button: Slide " + action);
                 player.attack(action == Button.Action.pressed);
-                add(Layer.bullet, new SwordBox(player.dx,6.5f));
+                add(Layer.bullet, new SwordBox(player.dx + (player.heroSpeed*10.0f),6.5f));
                 return true;
             }
         }));
