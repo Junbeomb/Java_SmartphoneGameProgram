@@ -14,6 +14,12 @@ public class MainScene extends Scene {
     private final Player player;
     private int currentStage;
     private boolean nextStageToggle;
+
+    private float nextStageDelayCurrent = 0.f;
+    private float nextStageDelay = 3.f;
+
+    public int remainMonster;
+
     public enum Layer {
         bg, enemy, bullet, player, ui,touch, controller, COUNT, SWORDBOX
     }
@@ -21,6 +27,7 @@ public class MainScene extends Scene {
 
         currentStage = 1;
         nextStageToggle = true;
+
 
         initLayers(Layer.COUNT);
 
@@ -84,20 +91,30 @@ public class MainScene extends Scene {
         }
 
         //다음 스테이지로
-        ArrayList<IGameObject> enemies = this.objectsAt(MainScene.Layer.enemy);
-        if(enemies.size() <= 0){
-            nextStageToggle = true;
-            currentStage = currentStage +1;
+        if(remainMonster <= 0){
+            nextStageDelayCurrent += elapsedSeconds;
+            if(nextStageDelayCurrent > nextStageDelay){
+                nextStageDelayCurrent = 0.f;
+                nextStageToggle = true;
+                currentStage = currentStage +1;
+            }
         }
     }
     public void StageOneStart(){
+
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage2bg, 0.2f));
-        add(Layer.enemy, new Enemy());
+        add(Layer.enemy, new Enemy(this));
+
+        ArrayList<IGameObject> enemies = this.objectsAt(MainScene.Layer.enemy);
+        remainMonster = enemies.size();
     }
 
     public void StageTwoStart(){
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage3bg, 0.2f));
-        add(Layer.enemy, new Enemy());
+        add(Layer.enemy, new Enemy(this));
+
+        ArrayList<IGameObject> enemies = this.objectsAt(MainScene.Layer.enemy);
+        remainMonster = enemies.size();
     }
 
 

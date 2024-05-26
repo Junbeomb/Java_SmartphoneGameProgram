@@ -18,6 +18,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
     public float monsterSpeed = 0.05f;
     protected float dx = 5.f;
 
+    protected MainScene scene;
     protected float maxHp = 100.f;
     protected float currentHp = 100.f;
     protected boolean deathToggle = false;
@@ -43,9 +44,9 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         }
         return rects;
     }
-    public Enemy() {
+    public Enemy(MainScene scene) {
         super(R.mipmap.catchmonster_monster1, 8);
-
+        this.scene = scene;
         currentHp = maxHp;
         deathToggle = false;
 
@@ -79,21 +80,22 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
                 }
             }
         }
-        else{
-            //srcRects = makeRects(200, 201, 202, 203, 204, 205, 206, 207);
-        }
     }
 
     public void receiveDamage(float damageAmount){
         currentHp = currentHp - damageAmount;
         if(currentHp <= 0){
             srcRects = makeRects(200, 201, 202, 203, 204, 205, 206, 207);
+
+            this.scene.remainMonster =this.scene.remainMonster -1;
             deathToggle = true;
         }
     }
 
     @Override
     public RectF getCollisionRect() {
+        if(deathToggle) return new RectF(0,0,0,0);
+
         return dstRect;
     }
 
