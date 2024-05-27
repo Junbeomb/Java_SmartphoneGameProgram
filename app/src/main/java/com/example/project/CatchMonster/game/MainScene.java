@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
     private final Player player;
-    private int currentStage;
+    public int currentStage;
     private boolean nextStageToggle;
 
     private float nextStageDelayCurrent = 0.f;
@@ -21,7 +21,7 @@ public class MainScene extends Scene {
     public int remainMonster;
 
     public enum Layer {
-        bg, enemy, bullet, player, ui,touch, controller, COUNT, SWORDBOX
+        bg, enemy,enemy2, bullet, player, ui,touch, controller, COUNT
     }
     public MainScene() {
 
@@ -31,7 +31,7 @@ public class MainScene extends Scene {
 
         initLayers(Layer.COUNT);
 
-        //add(Layer.controller, new EnemyGenerator());
+        //add(Layer.controller, new EnemyGenerator())
 
         player = new Player();
         add(Layer.player, player);
@@ -106,7 +106,7 @@ public class MainScene extends Scene {
 
         int monsterCount = 1;
         for(int i=0;i<monsterCount;i++){
-            add(Layer.enemy, new Enemy(this));
+            add(Layer.enemy, new Enemy(R.mipmap.catchmonster_monster1,this));
         }
         remainMonster = monsterCount;
     }
@@ -124,7 +124,7 @@ public class MainScene extends Scene {
 
         int monsterCount = 1;
         for(int i=0;i<monsterCount;i++){
-            add(Layer.enemy, new Enemy(this));
+            add(Layer.enemy2, new Enemy2(R.mipmap.catchmonster_monster2,this));
         }
         remainMonster = monsterCount;
     }

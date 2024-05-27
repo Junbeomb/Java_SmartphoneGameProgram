@@ -24,28 +24,55 @@ public class CollisionChecker implements IGameObject {
 
     @Override
     public void update(float elapsedSeconds) {
-        ArrayList<IGameObject> enemies = scene.objectsAt(MainScene.Layer.enemy);
+
+
         ArrayList<IGameObject> swordboxs = scene.objectsAt(MainScene.Layer.bullet);
 
-        for (int e = enemies.size() - 1; e >= 0; e--) {
-            Enemy enemy = (Enemy)enemies.get(e);
+        if(this.scene.currentStage == 1){
+            ArrayList<IGameObject> enemies = scene.objectsAt(MainScene.Layer.enemy);
+            for (int e = enemies.size() - 1; e >= 0; e--) {
+                Enemy enemy = (Enemy)enemies.get(e);
 
-            //플레이어와 몬스터가 부딪히면
-            if (CollisionHelper.collides(player, enemy)) {
-                player.hurt(scene); //플레이어 데미지
-                break;
-            }
-
-            //플레이어의 칼과 몬스터가 부딪히면
-            for(int sb = swordboxs.size()-1;sb>=0;sb--){
-                SwordBox tempSb = (SwordBox)swordboxs.get(sb);
-                if(CollisionHelper.collides(enemy,tempSb)){
-                    enemy.receiveDamage(50.f);
-                    //scene.remove(MainScene.Layer.enemy, enemy);
+                //플레이어와 몬스터가 부딪히면
+                if (CollisionHelper.collides(player, enemy)) {
+                    player.hurt(scene); //플레이어 데미지
                     break;
+                }
+
+                //플레이어의 칼과 몬스터가 부딪히면
+                for(int sb = swordboxs.size()-1;sb>=0;sb--){
+                    SwordBox tempSb = (SwordBox)swordboxs.get(sb);
+                    if(CollisionHelper.collides(enemy,tempSb)){
+                        enemy.receiveDamage(50.f);
+                        //scene.remove(MainScene.Layer.enemy, enemy);
+                        break;
+                    }
                 }
             }
         }
+        else if(this.scene.currentStage == 2){
+            ArrayList<IGameObject> enemies2 = scene.objectsAt(MainScene.Layer.enemy2);
+            for (int e = enemies2.size() - 1; e >= 0; e--) {
+                Enemy2 enemy2 = (Enemy2)enemies2.get(e);
+
+                //플레이어와 몬스터가 부딪히면
+                if (CollisionHelper.collides(player, enemy2)) {
+                    player.hurt(scene); //플레이어 데미지
+                    break;
+                }
+
+                //플레이어의 칼과 몬스터가 부딪히면
+                for(int sb = swordboxs.size()-1;sb>=0;sb--){
+                    SwordBox tempSb = (SwordBox)swordboxs.get(sb);
+                    if(CollisionHelper.collides(enemy2,tempSb)){
+                        enemy2.receiveDamage(50.f);
+                        //scene.remove(MainScene.Layer.enemy, enemy);
+                        break;
+                    }
+                }
+            }
+        }
+
 
 
     }
