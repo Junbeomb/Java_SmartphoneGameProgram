@@ -5,6 +5,7 @@ import android.graphics.RectF;
 
 import com.example.project.framework.interfaces.IBoxCollidable;
 import com.example.project.framework.objects.SheetSprite;
+import com.example.project.framework.scene.Scene;
 
 public class Enemy2 extends SheetSprite implements IBoxCollidable{
     protected float dx = 1.f;
@@ -78,6 +79,7 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
                 break;
             case walk:
                 if(Math.abs(dx - player.dx) <= 2.f){
+                    attackBullet();
                     setState(State.attack);
                 }
                 else{
@@ -99,7 +101,6 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
                             speed = 0.02f;
                         }
                     }
-
                 }
                 break;
             case attack:
@@ -111,9 +112,15 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
         if(state != State.die){
 
 
-
-
         }
+    }
+
+
+    public void attackBullet(){
+
+        Bullet bullet = Bullet.get(x, y , (float)speed);
+        scene.add(MainScene.Layer.bullet, bullet);
+        //Scene.top().add(MainScene.Layer.bullet, Bullet.get(x, y,(float)speed));
     }
 
     public void receiveDamage(float damageAmount){

@@ -28,7 +28,7 @@ public class SwordBox extends Sprite implements IBoxCollidable, IRecyclable {
 
         lifeTime = lifeTime+ elapsedSeconds;
         if(lifeTime >= life){ //1 초 되 삭제
-            Scene.top().remove(MainScene.Layer.bullet, this);
+            Scene.top().remove(MainScene.Layer.collisionBox, this);
         }
     }
 

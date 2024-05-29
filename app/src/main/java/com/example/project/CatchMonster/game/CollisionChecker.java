@@ -26,7 +26,7 @@ public class CollisionChecker implements IGameObject {
     public void update(float elapsedSeconds) {
 
 
-        ArrayList<IGameObject> swordboxs = scene.objectsAt(MainScene.Layer.bullet);
+        ArrayList<IGameObject> swordboxs = scene.objectsAt(MainScene.Layer.collisionBox);
 
         if(this.scene.currentStage == 1){
             ArrayList<IGameObject> enemies = scene.objectsAt(MainScene.Layer.enemy);

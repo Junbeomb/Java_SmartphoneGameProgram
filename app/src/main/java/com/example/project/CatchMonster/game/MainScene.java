@@ -21,14 +21,15 @@ public class MainScene extends Scene {
     public int remainMonster;
 
     public enum Layer {
-        bg, enemy,enemy2,enemy3, bullet, player, ui,touch, controller, COUNT
+        bg, enemy,enemy2,enemy3, bullet,collisionBox, player, ui,touch, controller,COUNT
     }
     public MainScene() {
+
+        initLayers(Layer.COUNT);
 
         currentStage = 1;
         nextStageToggle = true;
 
-        initLayers(Layer.COUNT);
 
         //add(Layer.controller, new EnemyGenerator())
 
@@ -61,7 +62,7 @@ public class MainScene extends Scene {
             public boolean onTouch(Button.Action action) {
                 //Log.d(TAG, "Button: Slide " + action);
                 player.attack(action == Button.Action.pressed);
-                add(Layer.bullet, new SwordBox(player.dx + (player.heroSpeed*10.0f),6.5f));
+                add(Layer.collisionBox, new SwordBox(player.dx + (player.heroSpeed*10.0f),6.5f));
                 return true;
             }
         }));
