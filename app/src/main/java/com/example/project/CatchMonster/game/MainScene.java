@@ -21,13 +21,12 @@ public class MainScene extends Scene {
     public int remainMonster;
 
     public enum Layer {
-        bg, enemy,enemy2, bullet, player, ui,touch, controller, COUNT
+        bg, enemy,enemy2,enemy3, bullet, player, ui,touch, controller, COUNT
     }
     public MainScene() {
 
         currentStage = 1;
         nextStageToggle = true;
-
 
         initLayers(Layer.COUNT);
 
@@ -87,6 +86,9 @@ public class MainScene extends Scene {
                 case 2:
                     StageTwoStart();
                     break;
+                case 3:
+                    StageThreeStart();
+                    break;
             }
         }
 
@@ -126,6 +128,22 @@ public class MainScene extends Scene {
         for(int i=0;i<monsterCount;i++){
             add(Layer.enemy2, new Enemy2(R.mipmap.catchmonster_monster2,this));
         }
+        remainMonster = monsterCount;
+    }
+
+    public void StageThreeStart(){
+
+        //그 전의 enemy 모두 제거
+        ArrayList<IGameObject> enemies = this.objectsAt(MainScene.Layer.enemy2);
+        for(int i=enemies.size()-1;i>=0;i--){
+            Enemy2 enemy = (Enemy2)enemies.get(i);
+            this.remove(MainScene.Layer.enemy2, enemy);
+        }
+
+        add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_bossbg, 0.2f));
+
+        int monsterCount = 1;
+        add(Layer.enemy3, new Enemy3(R.mipmap.catchmonster_boss,this));
         remainMonster = monsterCount;
     }
 
