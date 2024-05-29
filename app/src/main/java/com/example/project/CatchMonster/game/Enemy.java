@@ -2,33 +2,29 @@ package com.example.project.CatchMonster.game;
 
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.view.MotionEvent;
 
-import com.example.project.CatchMonster.R;
 import com.example.project.framework.interfaces.IBoxCollidable;
-import com.example.project.framework.interfaces.IRecyclable;
-import com.example.project.framework.objects.AnimSprite;
-import com.example.project.framework.objects.Button;
 import com.example.project.framework.objects.SheetSprite;
-import com.example.project.framework.scene.RecycleBin;
-import com.example.project.framework.scene.Scene;
-import com.example.project.framework.view.Metrics;
 
 public class Enemy extends SheetSprite implements IBoxCollidable{
-    public float monsterSpeed = 0.05f;
+
+    public enum State {
+        idle, walk, attack, hurt, die
+    }
+    protected Enemy.State state = Enemy.State.idle;
     protected float dx = 5.f;
 
     protected MainScene scene;
     protected float maxHp = 100.f;
     protected float currentHp = 100.f;
-    protected boolean deathToggle = false;
-    protected double direction = 0.1f;
-    protected float enemySpeed = 0.1f;
+
+    protected float spawnWaitingTime;
+    protected float spawnCurrentTime;
+    protected double speed;
     protected Rect[][] srcRectsArray = {
-            makeRects(100, 101, 102, 103), // State.running
-            makeRects(7, 8),               // State.jump
-            makeRects(1, 2, 3, 4),         // State.doubleJump
-            makeRects(0),                  // State.falling
+            makeRects(100), // State.idle
+            makeRects(100, 101, 102, 103), // State.walk
+            makeRects(200, 201, 202, 203, 204, 205, 206, 207)// State.die
     };
     protected Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
@@ -37,7 +33,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
             int l = (idx % 100) * 100;
             int t = ((idx/100)-1) * 100;
 
-            if(direction > 0.f)
+            if(speed > 0.f)
                 rects[i] = new Rect(l , t, l+100, t + 100);
             else
                 rects[i] = new Rect(l+100, t, l, t + 100);
@@ -48,53 +44,67 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         super(imageId, 8);
         this.scene = scene;
         currentHp = maxHp;
-        deathToggle = false;
-
-        direction = Math.random();
-        if(direction > 0.5f) direction = -0.1f;
-        else direction = 0.1f;
-
-        setPosition(6.5f, 6.5f, 2.0f, 2.0f);
+        spawnWaitingTime = 2.f;
+        setState(State.idle);
+        setPosition(dx, 6.5f, 2.0f, 2.0f);
         srcRects = srcRectsArray[0];
+    }
+    private void setState(Enemy.State state) {
+        this.state = state;
     }
     @Override
     public void update(float elapsedSeconds) {
 
-        if(!deathToggle){
-            if(direction > 0.f){
-                dx = dx + (float)direction;
-                setPosition(dx, 6.5f, 2.0f, 2.0f);
+        switch(state){
+            case idle:
+                spawnCurrentTime = spawnCurrentTime + elapsedSeconds;
+                if(spawnCurrentTime > spawnWaitingTime){
+                    setState(State.walk);
 
-                if(dx >= 16.f){
-                    srcRects = makeRects(100, 101, 102, 103);
-                    direction = -0.1f;
-                }
-            }
-            else{
-                dx = dx + (float)direction;
-                setPosition(dx,6.5f,2.0f,2.0f);
+                    speed = Math.random();
+                    if(speed > 0.5f) speed = -0.03f;
+                    else speed = 0.03f;
 
-                if(dx <= 0.f){
-                    srcRects = makeRects(100, 101, 102, 103);
-                    direction = 0.1f;
+                    srcRects = srcRectsArray[1];
                 }
-            }
+                break;
+            case walk:
+                if(speed > 0.f){
+                    dx = dx + (float)speed;
+                    setPosition(dx, 6.5f, 2.0f, 2.0f);
+
+                    if(dx >= 16.f){
+                        srcRects = srcRectsArray[1];
+                        speed = -0.03f;
+                    }
+                }
+                else{
+                    dx = dx + (float) speed;
+                    setPosition(dx,6.5f,2.0f,2.0f);
+
+                    if(dx <= 0.f){
+                        srcRects = srcRectsArray[1];
+                        speed = 0.03f;
+                    }
+                }
+                break;
+            case die:
+                break;
         }
     }
 
     public void receiveDamage(float damageAmount){
         currentHp = currentHp - damageAmount;
         if(currentHp <= 0){
-            srcRects = makeRects(200, 201, 202, 203, 204, 205, 206, 207);
-
+            setState(State.die);
+            srcRects = srcRectsArray[2];
             this.scene.remainMonster =this.scene.remainMonster -1;
-            deathToggle = true;
         }
     }
 
     @Override
     public RectF getCollisionRect() {
-        if(deathToggle) return new RectF(0,0,0,0);
+        if(state == Enemy.State.die) return new RectF(0,0,0,0);
 
         return dstRect;
     }

@@ -126,7 +126,7 @@ public class MainScene extends Scene {
 
         int monsterCount = 1;
         for(int i=0;i<monsterCount;i++){
-            add(Layer.enemy2, new Enemy2(R.mipmap.catchmonster_monster2,this));
+            add(Layer.enemy2, new Enemy2(R.mipmap.catchmonster_monster2,this,player));
         }
         remainMonster = monsterCount;
     }
