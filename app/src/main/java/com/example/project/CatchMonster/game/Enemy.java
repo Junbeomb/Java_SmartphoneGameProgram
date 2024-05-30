@@ -20,7 +20,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
 
     protected float spawnWaitingTime;
     protected float spawnCurrentTime;
-    protected double speed;
+    protected static float speed;
     protected Rect[][] srcRectsArray = {
             makeRects(100), // State.idle
             makeRects(100, 101, 102, 103), // State.walk
@@ -33,7 +33,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
             int l = (idx % 100) * 100;
             int t = ((idx/100)-1) * 100;
 
-            if(speed > 0.f)
+            if(speed <= 0.f)
                 rects[i] = new Rect(l , t, l+100, t + 100);
             else
                 rects[i] = new Rect(l+100, t, l, t + 100);
@@ -44,10 +44,16 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         super(imageId, 8);
         this.scene = scene;
         currentHp = maxHp;
+        spawnCurrentTime=0.f;
         spawnWaitingTime = 2.f;
         setState(State.idle);
+
+        speed = (float)Math.random();
+        if(speed > 0.5f) speed = -0.02f;
+        else speed = 0.02f;
+
         setPosition(dx, 6.5f, 2.0f, 2.0f);
-        srcRects = srcRectsArray[0];
+        srcRects = makeRects(100);
     }
     private void setState(Enemy.State state) {
         this.state = state;
@@ -60,30 +66,21 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
                 spawnCurrentTime = spawnCurrentTime + elapsedSeconds;
                 if(spawnCurrentTime > spawnWaitingTime){
                     setState(State.walk);
-
-                    speed = Math.random();
-                    if(speed > 0.5f) speed = -0.03f;
-                    else speed = 0.03f;
-
-                    srcRects = srcRectsArray[1];
                 }
                 break;
             case walk:
+                srcRects = makeRects(100, 101, 102, 103);
                 if(speed > 0.f){
                     dx = dx + (float)speed;
                     setPosition(dx, 6.5f, 2.0f, 2.0f);
-
                     if(dx >= 16.f){
-                        srcRects = srcRectsArray[1];
                         speed = -0.03f;
                     }
                 }
                 else{
                     dx = dx + (float) speed;
                     setPosition(dx,6.5f,2.0f,2.0f);
-
                     if(dx <= 0.f){
-                        srcRects = srcRectsArray[1];
                         speed = 0.03f;
                     }
                 }
@@ -97,7 +94,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         currentHp = currentHp - damageAmount;
         if(currentHp <= 0){
             setState(State.die);
-            srcRects = srcRectsArray[2];
+            srcRects = makeRects(200, 201, 202, 203, 204, 205, 206, 207);
             this.scene.remainMonster =this.scene.remainMonster -1;
         }
     }

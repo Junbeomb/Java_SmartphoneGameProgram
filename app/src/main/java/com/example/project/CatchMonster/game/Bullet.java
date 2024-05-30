@@ -10,14 +10,17 @@ import com.example.project.framework.scene.RecycleBin;
 import com.example.project.framework.scene.Scene;
 
 public class Bullet extends Sprite implements IBoxCollidable, IRecyclable {
-    private static final float BULLET_WIDTH = 5.0f;
-    private static final float BULLET_HEIGHT = 5.0f;
+    private static final float BULLET_WIDTH = 1.0f;
+    private static final float BULLET_HEIGHT = 1.0f;
     private static final float SPEED = 5.f;
 
     public Bullet(float x, float y, float direction) {
-        super(R.mipmap.hero_face);
-        setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
-        dx = -direction * 2;
+        super(R.mipmap.catchmonster_enemy2bullet);
+        if(direction < 0)
+            setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
+        else
+            setPosition(x, y, -BULLET_WIDTH, BULLET_HEIGHT);
+        dx = direction * 100;
     }
     public static Bullet get(float x, float y, float direction) {
         Bullet bullet = (Bullet) RecycleBin.get(Bullet.class);
@@ -31,7 +34,7 @@ public class Bullet extends Sprite implements IBoxCollidable, IRecyclable {
     @Override
     public void update(float elapsedSeconds) {
         super.update(elapsedSeconds);
-        if (dstRect.bottom < 0) {
+        if (dstRect.right < 0.f || dstRect.left > 16.f) {
             //Scene.top().remove(MainScene.Layer.bullet, this);
         }
     }
