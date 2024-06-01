@@ -71,12 +71,29 @@ public class CollisionChecker implements IGameObject {
                     }
                 }
             }
+
             ArrayList<IGameObject> bullets = scene.objectsAt(MainScene.Layer.bullet);
             for(int b = 0; b<=bullets.size()-1;b++){
                 Bullet bullet = (Bullet)bullets.get(b);
+
+                //bullet과 플레이어가 부딪히면
                 if(CollisionHelper.collides(player,bullet)){
+                    HitEffect he = new HitEffect(player.dx,6.5f);
+                    scene.add(MainScene.Layer.effect, he);
+
+                    bullet.bombBullet();
+
                     player.hurt(scene);
-                    scene.remove(MainScene.Layer.bullet, bullet);
+                }
+
+                //플레이어의 칼과 bullet 부딪히면
+                for(int sb = swordboxs.size()-1;sb>=0;sb--){
+                    SwordBox tempSb = (SwordBox)swordboxs.get(sb);
+                    if(CollisionHelper.collides(bullet,tempSb)){
+
+                        scene.remove(MainScene.Layer.bullet, bullet);
+                        break;
+                    }
                 }
             }
         }
