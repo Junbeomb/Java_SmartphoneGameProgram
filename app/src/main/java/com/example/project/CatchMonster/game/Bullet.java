@@ -16,10 +16,12 @@ public class Bullet extends Sprite implements IBoxCollidable, IRecyclable {
 
     public Bullet(float x, float y, float direction) {
         super(R.mipmap.catchmonster_enemy2bullet);
-        if(direction < 0)
-            setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
-        else
-            setPosition(x, y, -BULLET_WIDTH, BULLET_HEIGHT);
+        setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
+        dx = direction * 100;
+    }
+    public Bullet(float x, float y, float direction, boolean bool) {
+        super(R.mipmap.catchmonster_enemy2bullet_reverse);
+        setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
         dx = direction * 100;
     }
     public static Bullet get(float x, float y, float direction) {
@@ -28,14 +30,17 @@ public class Bullet extends Sprite implements IBoxCollidable, IRecyclable {
             bullet.setPosition(x, y, BULLET_WIDTH, BULLET_HEIGHT);
             return bullet;
         }
-        return new Bullet(x, y,direction);
+        if(direction < 0)
+            return new Bullet(x, y,direction);
+        else
+            return new Bullet(x,y,direction,true);
     }
 
     @Override
     public void update(float elapsedSeconds) {
         super.update(elapsedSeconds);
         if (dstRect.right < 0.f || dstRect.left > 16.f) {
-            //Scene.top().remove(MainScene.Layer.bullet, this);
+            Scene.top().remove(MainScene.Layer.bullet, this);
         }
     }
 

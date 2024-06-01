@@ -20,7 +20,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
         idle,goLeft,goRight,attack,hurt,invincibility,die
     }
 
-    public int heart = 3;
+    public int heart = 6;
 
     private RectF collisionRect = new RectF();
     protected State state = State.idle;

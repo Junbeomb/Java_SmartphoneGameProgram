@@ -71,6 +71,14 @@ public class CollisionChecker implements IGameObject {
                     }
                 }
             }
+            ArrayList<IGameObject> bullets = scene.objectsAt(MainScene.Layer.bullet);
+            for(int b = 0; b<=bullets.size()-1;b++){
+                Bullet bullet = (Bullet)bullets.get(b);
+                if(CollisionHelper.collides(player,bullet)){
+                    player.hurt(scene);
+                    scene.remove(MainScene.Layer.bullet, bullet);
+                }
+            }
         }
 
 

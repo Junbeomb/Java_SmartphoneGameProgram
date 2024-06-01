@@ -16,7 +16,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
 
     protected MainScene scene;
     protected float maxHp = 100.f;
-    protected float currentHp = 100.f;
+    protected float currentHp;
 
     protected float spawnWaitingTime;
     protected float spawnCurrentTime;
