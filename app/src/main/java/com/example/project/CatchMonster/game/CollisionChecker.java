@@ -97,6 +97,23 @@ public class CollisionChecker implements IGameObject {
                 }
             }
         }
+        else if(this.scene.currentStage == 3) {
+            ArrayList<IGameObject> enemies3 = scene.objectsAt(MainScene.Layer.enemy3);
+            for(int b = 0; b<=enemies3.size()-1;b++){
+                Enemy3 enemy3 = (Enemy3)enemies3.get(b);
+
+                //플레이어의 칼과 몬스터가 부딪히면
+                for(int sb = swordboxs.size()-1;sb>=0;sb--){
+                    SwordBox tempSb = (SwordBox)swordboxs.get(sb);
+                    if(CollisionHelper.collides(enemy3,tempSb)){
+                        enemy3.receiveDamage(20.f,tempSb);
+                        //scene.remove(MainScene.Layer.enemy, enemy);
+                        break;
+                    }
+                }
+
+            }
+        }
 
 
 

@@ -17,7 +17,6 @@ public class HitEffect extends SheetSprite {
             int l = (idx % 200) * 200;
             int t = 0;
             rects[i] = new Rect(l, t, l + 200, t + 200);
-
         }
         return rects;
     }

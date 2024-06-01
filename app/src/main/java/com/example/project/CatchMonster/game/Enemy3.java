@@ -10,15 +10,20 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     protected float dx = 5.f;
 
     protected MainScene scene;
+
+    public enum State {
+        idle, walk, attack, hurt, die
+    }
+    protected Enemy3.State state = Enemy3.State.idle;
     protected float maxHp = 100.f;
     protected float currentHp;
     protected boolean deathToggle;
     protected double direction;
+    private SwordBox SB;
+    private float hurtCooltime = 1.2f;
+    private float hurtCooltimeCurrent =0.f;
     protected Rect[][] srcRectsArray = {
             makeRects(300, 301, 302, 303, 304), // State.running
-            makeRects(7, 8),               // State.jump
-            makeRects(1, 2, 3, 4),         // State.doubleJump
-            makeRects(0),                  // State.falling
     };
     protected Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
@@ -45,31 +50,50 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
         this.scene = scene;
         currentHp = maxHp;
         deathToggle = false;
+        setState(State.idle);
 
         setPosition(8.0f, 5.0f, 6.0f, 6.0f);
         srcRects = srcRectsArray[0];
     }
+
+    private void setState(Enemy3.State state) {
+        this.state = state;
+    }
     @Override
     public void update(float elapsedSeconds) {
 
-        if(!deathToggle){
-            srcRects = makeRects(300, 301, 302, 303, 304);
+        switch(state){
+            case idle:
+                srcRects = makeRects(300, 301, 302, 303, 304);
+                break;
+            case hurt:
+                hurtCooltimeCurrent = hurtCooltimeCurrent + elapsedSeconds;
+                if(hurtCooltimeCurrent > hurtCooltime){
+                    hurtCooltimeCurrent = 0.f;
+                    setState(State.idle);
+                }
+                break;
+            case die:
+                break;
         }
     }
 
-    public void receiveDamage(float damageAmount){
-        currentHp = currentHp - damageAmount;
-        if(currentHp <= 0){
-            srcRects = makeRects(600, 601, 602, 603, 604);
+    public void receiveDamage(float damageAmount,SwordBox tempSb){
+        if(state == Enemy3.State.hurt|| state == Enemy3.State.die) return;
+        setState(State.hurt);
 
+        currentHp = currentHp - damageAmount;
+
+        if(currentHp <= 0){
+            scene.remove(MainScene.Layer.enemy3, this);
             this.scene.remainMonster =this.scene.remainMonster -1;
-            deathToggle = true;
+            setState(State.die);
         }
     }
 
     @Override
     public RectF getCollisionRect() {
-        if(deathToggle) return new RectF(0,0,0,0);
+        if(state == Enemy3.State.die) return new RectF(0,0,0,0);
 
         return dstRect;
     }

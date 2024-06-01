@@ -27,7 +27,7 @@ public class MainScene extends Scene {
 
         initLayers(Layer.COUNT);
 
-        currentStage = 2;
+        currentStage = 3;
         nextStageToggle = true;
 
 
@@ -142,6 +142,7 @@ public class MainScene extends Scene {
         }
 
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_bossbg, 0.2f));
+
 
         int monsterCount = 1;
         add(Layer.enemy3, new Enemy3(R.mipmap.catchmonster_boss,this));
