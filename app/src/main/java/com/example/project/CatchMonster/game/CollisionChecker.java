@@ -79,11 +79,9 @@ public class CollisionChecker implements IGameObject {
 
                     //bullet과 플레이어가 부딪히면
                     if(CollisionHelper.collides(player,bullet)){
-                        HitEffect he = new HitEffect(player.dx,6.5f);
-                        scene.add(MainScene.Layer.effect, he);
-
-                        bullet.bombBullet();
-
+//                        HitEffect he = new HitEffect(player.dx,6.5f);
+//                        scene.add(MainScene.Layer.effect, he);
+                        bullet.bombBullet(player.dx,scene);
                         player.hurt(scene);
                     }
 
@@ -91,8 +89,8 @@ public class CollisionChecker implements IGameObject {
                     for(int sb = swordboxs.size()-1;sb>=0;sb--){
                         SwordBox tempSb = (SwordBox)swordboxs.get(sb);
                         if(CollisionHelper.collides(bullet,tempSb)){
-
-                            scene.remove(MainScene.Layer.bullet, bullet);
+                            bullet.bounceBullet();
+                            //scene.remove(MainScene.Layer.bullet, bullet);
                             break;
                         }
                     }

@@ -75,10 +75,14 @@ public class Bullet extends Sprite implements IBoxCollidable, IRecyclable {
 
     public void bounceBullet(){
         setState(Bullet.State.bounce);
+        Scene.top().remove(MainScene.Layer.bullet, this);
     }
 
-    public void bombBullet(){
+    public void bombBullet(float x,MainScene scene){
         setState(Bullet.State.bomb);
+
+        HitEffect he = new HitEffect(x,6.5f);
+        scene.add(MainScene.Layer.effect,he);
 
         Scene.top().remove(MainScene.Layer.bullet, this);
     }
