@@ -22,6 +22,8 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     private SwordBox SB;
     private float hurtCooltime = 1.2f;
     private float hurtCooltimeCurrent =0.f;
+    private float skillCooltime = 5.f;
+    private float skillCoolCurrent = 0.f;
     protected Rect[][] srcRectsArray = {
             makeRects(300, 301, 302, 303, 304), // State.running
     };
@@ -46,7 +48,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
         return rects;
     }
     public Enemy3(int imageId, MainScene scene) {
-        super(imageId, 8);
+        super(imageId, 5);
         this.scene = scene;
         currentHp = maxHp;
         deathToggle = false;
@@ -61,10 +63,22 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     }
     @Override
     public void update(float elapsedSeconds) {
-
+        skillCoolCurrent = skillCoolCurrent + elapsedSeconds;
+        if(skillCoolCurrent > skillCooltime){
+            skillCoolCurrent = 0.f;
+            setState(State.attack);
+        }
         switch(state){
             case idle:
                 srcRects = makeRects(300, 301, 302, 303, 304);
+                break;
+            case attack:
+                for(int i=0;i<5;i++){
+                    float randomX = (float)Math.random() * 16;
+                    BossLigtningSkill lSkill = new BossLigtningSkill(randomX, y);
+                    scene.add(MainScene.Layer.bossLighting, lSkill);
+                }
+                setState(State.idle);
                 break;
             case hurt:
                 hurtCooltimeCurrent = hurtCooltimeCurrent + elapsedSeconds;
