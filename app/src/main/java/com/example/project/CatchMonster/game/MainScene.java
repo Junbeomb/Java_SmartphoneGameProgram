@@ -27,7 +27,7 @@ public class MainScene extends Scene {
 
         initLayers(Layer.COUNT);
 
-        currentStage = 2;
+        currentStage = 1;
         nextStageToggle = true;
 
 

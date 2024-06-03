@@ -16,10 +16,11 @@ public class SwordBox extends Sprite implements IBoxCollidable, IRecyclable {
 
     private float lifeTime = 0.f;
     private float life = 1.f;
+    public float currentX;
     public SwordBox(float x, float y) {
         super(R.mipmap.arrow_right);
-
         setPosition(x, y, SwordBox_WIDTH, SwordBox_HEIGHT);
+        currentX = x;
     }
 
     @Override
@@ -38,6 +39,7 @@ public class SwordBox extends Sprite implements IBoxCollidable, IRecyclable {
             swordbox.setPosition(x, y, SwordBox_WIDTH, SwordBox_HEIGHT);
             return swordbox;
         }
+
         return new SwordBox(x, y);
     }
 

@@ -44,7 +44,7 @@ public class CollisionChecker implements IGameObject {
                     for(int sb = swordboxs.size()-1;sb>=0;sb--){
                         SwordBox tempSb = (SwordBox)swordboxs.get(sb);
                         if(CollisionHelper.collides(enemy,tempSb)){
-                            enemy.receiveDamage(50.f);
+                            enemy.receiveDamage(20.f,enemy.dx - tempSb.currentX);
                             //scene.remove(MainScene.Layer.enemy, enemy);
                             break;
                         }

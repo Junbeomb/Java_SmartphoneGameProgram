@@ -69,7 +69,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
 
             float tempRandom = (float)Math.random();
             if(tempRandom > 0.5){
-                setState(State.attack2);
+                setState(State.attack1);
             }
             else{
                 setState(State.attack2);
@@ -88,7 +88,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
                 setState(State.idle);
                 break;
             case attack2:
-                for(int i=0;i<5;i++){
+                for(int i=0;i<3;i++){
                     float randomX = (float)Math.random() * 16;
                     BossFireSkill fSkill = new BossFireSkill(randomX, y);
                     scene.add(MainScene.Layer.bossFire, fSkill);
