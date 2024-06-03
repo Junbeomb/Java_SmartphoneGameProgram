@@ -21,7 +21,7 @@ public class MainScene extends Scene {
     public int remainMonster;
 
     public enum Layer {
-        bg, enemy,enemy2,enemy3, bullet,bossLighting, collisionBox, player, ui,touch,effect, controller,COUNT
+        bg, enemy,enemy2,enemy3, bullet,bossLighting,bossFire, collisionBox, player, ui,touch,effect, controller,COUNT
     }
     public MainScene() {
 

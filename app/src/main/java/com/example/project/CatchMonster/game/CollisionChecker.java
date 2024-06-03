@@ -115,7 +115,17 @@ public class CollisionChecker implements IGameObject {
                 for(int l =0;l<=bossLights.size()-1;l++){
                     BossLigtningSkill bosslight = (BossLigtningSkill)bossLights.get(l);
 
+                    //bosslight 와 플레이어가 부딪히면
                     if(CollisionHelper.collides(bosslight,player)){
+                        player.hurt(scene);
+                    }
+                }
+
+                ArrayList<IGameObject> bossFires = scene.objectsAt(MainScene.Layer.bossFire);
+                for(int f =0;f<=bossFires.size()-1;f++){
+                    BossFireSkill bossFire = (BossFireSkill)bossFires.get(f);
+                    //bossFire 와 플레이어가 부딪히면
+                    if(CollisionHelper.collides(bossFire,player)){
                         player.hurt(scene);
                     }
                 }

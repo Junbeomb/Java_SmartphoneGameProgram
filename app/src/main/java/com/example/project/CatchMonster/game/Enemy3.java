@@ -12,7 +12,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     protected MainScene scene;
 
     public enum State {
-        idle, walk, attack, hurt, die
+        idle, walk, attack1, attack2, hurt, die
     }
     protected Enemy3.State state = Enemy3.State.idle;
     protected float maxHp = 100.f;
@@ -66,17 +66,32 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
         skillCoolCurrent = skillCoolCurrent + elapsedSeconds;
         if(skillCoolCurrent > skillCooltime){
             skillCoolCurrent = 0.f;
-            setState(State.attack);
+
+            float tempRandom = (float)Math.random();
+            if(tempRandom > 0.5){
+                setState(State.attack2);
+            }
+            else{
+                setState(State.attack2);
+            }
         }
         switch(state){
             case idle:
                 srcRects = makeRects(300, 301, 302, 303, 304);
                 break;
-            case attack:
+            case attack1:
                 for(int i=0;i<5;i++){
                     float randomX = (float)Math.random() * 16;
                     BossLigtningSkill lSkill = new BossLigtningSkill(randomX, y);
                     scene.add(MainScene.Layer.bossLighting, lSkill);
+                }
+                setState(State.idle);
+                break;
+            case attack2:
+                for(int i=0;i<5;i++){
+                    float randomX = (float)Math.random() * 16;
+                    BossFireSkill fSkill = new BossFireSkill(randomX, y);
+                    scene.add(MainScene.Layer.bossFire, fSkill);
                 }
                 setState(State.idle);
                 break;
