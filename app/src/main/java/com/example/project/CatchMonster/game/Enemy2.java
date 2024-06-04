@@ -88,7 +88,7 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
 
                 //player를 바라보고 있고 일정거리 내에 있으면 공격
                 if((speed < 0 && dx-player.dx > 0) || (speed> 0 && dx-player.dx < 0)){
-                    if(Math.abs(dx - player.dx) <= 3.f){
+                    if(Math.abs(dx - player.dx) <= 5.f){
                         attackBullet();
                         setState(State.attack);
                         break;
