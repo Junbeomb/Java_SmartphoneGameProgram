@@ -33,7 +33,7 @@ public class MainScene extends Scene {
 
         //add(Layer.controller, new EnemyGenerator())
 
-        player = new Player();
+        player = new Player(this);
         add(Layer.player, player);
         add(Layer.controller, new CollisionChecker(this, player));
 
@@ -62,7 +62,7 @@ public class MainScene extends Scene {
             public boolean onTouch(Button.Action action) {
                 //Log.d(TAG, "Button: Slide " + action);
                 player.attack(action == Button.Action.pressed);
-                add(Layer.collisionBox, new SwordBox(player.dx + (player.heroSpeed*10.0f),6.5f));
+                //add(Layer.collisionBox, new SwordBox(player.dx + (player.heroSpeed*10.0f),6.5f, player));
                 return true;
             }
         }));
