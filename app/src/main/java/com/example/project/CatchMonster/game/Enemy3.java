@@ -77,7 +77,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
 
             float tempRandom = (float)Math.random();
             if(tempRandom > 0.5){
-                setState(State.attack1);
+                setState(State.attack2);
             }
             else{
                 setState(State.attack2);

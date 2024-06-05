@@ -26,7 +26,6 @@ public class CollisionChecker implements IGameObject {
     @Override
     public void update(float elapsedSeconds) {
 
-
         ArrayList<IGameObject> swordboxs = scene.objectsAt(MainScene.Layer.collisionBox);
 
         switch(this.scene.currentStage){
@@ -118,7 +117,6 @@ public class CollisionChecker implements IGameObject {
                 ArrayList<IGameObject> bossLights = scene.objectsAt(MainScene.Layer.bossLighting);
                 for(int l =0;l<=bossLights.size()-1;l++){
                     BossLigtningSkill bosslight = (BossLigtningSkill)bossLights.get(l);
-
                     //bosslight 와 플레이어가 부딪히면
                     if(CollisionHelper.collides(bosslight,player)){
                         player.hurt(scene);
@@ -126,11 +124,20 @@ public class CollisionChecker implements IGameObject {
                 }
 
                 ArrayList<IGameObject> bossFires = scene.objectsAt(MainScene.Layer.bossFire);
-                for(int f =0;f<=bossFires.size()-1;f++){
+                for(int f =bossFires.size()-1;f>=0;f--){
                     BossFireSkill bossFire = (BossFireSkill)bossFires.get(f);
                     //bossFire 와 플레이어가 부딪히면
                     if(CollisionHelper.collides(bossFire,player)){
                         player.hurt(scene);
+                    }
+                    //bossFire 와 플레이어 공격이 부딪힘
+                    for(int sb = swordboxs.size()-1;sb>=0;sb--){
+                        SwordBox tempSb = (SwordBox)swordboxs.get(sb);
+                        if(CollisionHelper.collides(bossFire,tempSb)){
+                            tempSb.removeCollision(R.mipmap.catchmonster_herohiteffect,scene,tempSb.currentX);
+                            bossFire.ReceiveDamage();
+                            break;
+                        }
                     }
                 }
                 break;

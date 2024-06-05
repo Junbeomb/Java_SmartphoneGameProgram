@@ -11,6 +11,11 @@ import com.example.project.framework.scene.Scene;
 public class BossFireSkill extends SheetSprite implements IBoxCollidable {
 
     private boolean noDamage;
+
+    private int damageCount = 0;
+    private boolean damageStatus = false;
+    private float damageStatusSeconds = 0.f;
+    private float seconds = 0.f;
     private RectF collisionRect = new RectF();
     protected Rect[][] srcRectsArray = {
             makeRects(0), //가만히
@@ -33,6 +38,7 @@ public class BossFireSkill extends SheetSprite implements IBoxCollidable {
             int idx = indices[i];
             int l = idx * 100;
             int t = 0;
+
             rects[i] = new Rect(l, t, l + 100, t + 150);
         }
         return rects;
@@ -41,28 +47,55 @@ public class BossFireSkill extends SheetSprite implements IBoxCollidable {
         super(R.mipmap.catchmonster_bossfireskill, 5);
         setPosition(x, 6.5f, 2.f, 2.f);
         fixCollisionRect();
+
+        damageCount = 0;
+        damageStatus = false;
+        damageStatusSeconds = 0.f;
+        seconds = 0.f;
         noDamage = true;
+
         srcRects = makeRects(0);
     }
 
-    private float seconds = 0.f;
+
 
     private int skillPage = 0;
     @Override
     public void update(float elapsedSeconds) {
         seconds = seconds + elapsedSeconds;
 
+        if(damageStatus){
+            damageStatusSeconds += elapsedSeconds;
+            srcRects = makeRects(6,0,7,0,8,0,9,0);
+            if(damageStatusSeconds > 2.f){
+                damageStatusSeconds = 0.f;
+                damageStatus = false;
+            }
+        }
         //3초 지난뒤에 데미지 주기
         if(skillPage == 0 && seconds >=3.0f){
-            srcRects = makeRects(6,7,8,9);
+            if(!damageStatus)
+                srcRects = makeRects(6,7,8,9);
             skillPage = 3;
             noDamage = false;
         }
         if(skillPage == 3 && seconds >= 9.2f){
-            srcRects = makeRects(15,16,15,16,15);
+            if(!damageStatus)
+                srcRects = makeRects(15,16,15,16,15);
             skillPage = 4;
         }
         if(skillPage == 4 && seconds >= 12.f){
+            noDamage = true;
+            Scene.top().remove(MainScene.Layer.bossFire, this);
+        }
+    }
+
+    public void ReceiveDamage(){
+        damageCount+=1;
+        damageStatus = true;
+        damageStatusSeconds = 0.f;
+        if(damageCount >= 3){
+            damageStatus = false;
             noDamage = true;
             Scene.top().remove(MainScene.Layer.bossFire, this);
         }
@@ -75,5 +108,6 @@ public class BossFireSkill extends SheetSprite implements IBoxCollidable {
         else
             return collisionRect;
     }
+
 
 }
