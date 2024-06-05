@@ -11,15 +11,14 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
 
     protected MainScene scene;
 
+    private RectF collisionRect = new RectF();
+
     public enum State {
         idle, walk, attack1, attack2, hurt, die
     }
     protected Enemy3.State state = Enemy3.State.idle;
     protected float maxHp = 100.f;
     protected float currentHp;
-    protected boolean deathToggle;
-    protected double direction;
-    private SwordBox SB;
     private float hurtCooltime = 1.2f;
     private float hurtCooltimeCurrent =0.f;
     private float skillCooltime = 5.f;
@@ -51,11 +50,19 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
         super(imageId, 5);
         this.scene = scene;
         currentHp = maxHp;
-        deathToggle = false;
         setState(State.idle);
+        fixCollisionRect();
 
         setPosition(8.0f, 5.0f, 6.0f, 6.0f);
         srcRects = srcRectsArray[0];
+    }
+
+    private void fixCollisionRect() {
+        collisionRect.set(
+                dstRect.left + 1.5f,
+                dstRect.top,
+                dstRect.right - 1.5f,
+                dstRect.bottom);
     }
 
     private void setState(Enemy3.State state) {
@@ -63,6 +70,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     }
     @Override
     public void update(float elapsedSeconds) {
+
         skillCoolCurrent = skillCoolCurrent + elapsedSeconds;
         if(skillCoolCurrent > skillCooltime){
             skillCoolCurrent = 0.f;
@@ -105,6 +113,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
             case die:
                 break;
         }
+        fixCollisionRect();
     }
 
     public void receiveDamage(float damageAmount,SwordBox tempSb){
@@ -124,7 +133,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     public RectF getCollisionRect() {
         if(state == Enemy3.State.die) return new RectF(0,0,0,0);
 
-        return dstRect;
+        return collisionRect;
     }
 
 }

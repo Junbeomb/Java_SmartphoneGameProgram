@@ -22,7 +22,7 @@ public class HitEffect extends SheetSprite {
     }
     public HitEffect(float x, float y) {
         super(R.mipmap.catchmonster_bombeffect, 8);
-        setPosition(x, 6.5f, 1.5f, 1.5f);
+        setPosition(x, 6.5f, 1.0f, 1.0f);
         srcRects = makeRects(200,201,202,203,204,205,206,207,208,209,210,211);
     }
 
