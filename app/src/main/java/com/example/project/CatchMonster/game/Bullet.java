@@ -96,7 +96,7 @@ public class Bullet extends Sprite implements IBoxCollidable, IRecyclable {
     public void bombBullet(float x,MainScene scene){
         setState(Bullet.State.bomb);
 
-        HitEffect he = new HitEffect(x,6.5f);
+        HitEffect he = new HitEffect(R.mipmap.catchmonster_bombeffect,x,6.5f);
         scene.add(MainScene.Layer.effect,he);
 
         Scene.top().remove(MainScene.Layer.bullet, this);

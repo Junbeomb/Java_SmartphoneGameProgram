@@ -19,6 +19,8 @@ public class SwordBox extends SheetSprite implements IBoxCollidable, IRecyclable
     private float lifeTime = 0.f;
     private float life = 0.2f;
     public float currentX;
+
+    private boolean removeCollideBox = false;
     private boolean reverseSprite = false;
     protected Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
@@ -50,7 +52,12 @@ public class SwordBox extends SheetSprite implements IBoxCollidable, IRecyclable
 
         srcRects = makeRects(0, 1, 2, 3, 4, 5);
     }
+    public void removeCollision(int imageId,MainScene scene, float effectDx){
+        HitEffect he = new HitEffect(imageId,effectDx,6.5f);
+        scene.add(MainScene.Layer.effect, he);
 
+        removeCollideBox = true;
+    }
     @Override
     public void update(float elapsedSeconds) {
         super.update(elapsedSeconds);
@@ -63,6 +70,8 @@ public class SwordBox extends SheetSprite implements IBoxCollidable, IRecyclable
 
     @Override
     public RectF getCollisionRect() {
+        if(removeCollideBox) return new RectF(0,0,0,0);
+
         return dstRect;
     }
     public void onRecycle() {
