@@ -10,7 +10,7 @@ import com.example.project.framework.scene.Scene;
 
 public class BossFireSkill extends SheetSprite implements IBoxCollidable {
 
-    private boolean noDamage;
+    public boolean noDamage;
 
     private int damageCount = 0;
     private boolean damageStatus = false;
@@ -96,7 +96,7 @@ public class BossFireSkill extends SheetSprite implements IBoxCollidable {
         damageStatusSeconds = 0.f;
         if(damageCount >= 3){
             damageStatus = false;
-            noDamage = true;
+            noDamage = false;
             Scene.top().remove(MainScene.Layer.bossFire, this);
         }
     }

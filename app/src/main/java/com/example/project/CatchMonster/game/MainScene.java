@@ -57,7 +57,7 @@ public class MainScene extends Scene {
                 return true;
             }
         }));
-        add(Layer.touch, new Button(R.mipmap.attack_button, 10.5f, 8.3f, 2.0f, 2.0f, new Button.Callback() {
+        add(Layer.touch, new Button(R.mipmap.attack_button, 12.5f, 8.3f, 1.2f, 1.2f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
                 //Log.d(TAG, "Button: Slide " + action);
