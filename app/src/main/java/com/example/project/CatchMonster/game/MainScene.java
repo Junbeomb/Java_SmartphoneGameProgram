@@ -27,7 +27,7 @@ public class MainScene extends Scene {
 
         initLayers(Layer.COUNT);
 
-        currentStage = 3;
+        currentStage = 2;
         nextStageToggle = true;
 
 
@@ -38,7 +38,7 @@ public class MainScene extends Scene {
         add(Layer.controller, new CollisionChecker(this, player));
 
         for(int i=0;i<player.heart;i = i+1){
-            add(Layer.ui, new UI(R.mipmap.hero_face,1.5f * i,1.5f,1.8f,1.8f));
+            add(Layer.ui, new UI(R.mipmap.hero_face,1.5f * i + 1.f,1.5f,1.8f,1.8f));
         }
 
         add(Layer.touch, new Button(R.mipmap.arrow_left, 1.5f, 8.3f, 2.0f, 0.75f, new Button.Callback() {
@@ -57,7 +57,7 @@ public class MainScene extends Scene {
                 return true;
             }
         }));
-        add(Layer.touch, new Button(R.mipmap.attack_button, 12.5f, 8.3f, 1.2f, 1.2f, new Button.Callback() {
+        add(Layer.touch, new Button(R.mipmap.attack_button, 16.0f, 8.3f, 1.2f, 1.2f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
                 //Log.d(TAG, "Button: Slide " + action);

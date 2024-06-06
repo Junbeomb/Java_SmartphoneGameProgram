@@ -1,14 +1,11 @@
 package com.example.project.CatchMonster.game;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 import com.example.project.CatchMonster.R;
 import com.example.project.framework.interfaces.IGameObject;
-import com.example.project.framework.objects.Sprite;
-import com.example.project.framework.objects.UI;
 import com.example.project.framework.scene.Scene;
 import com.example.project.framework.util.CollisionHelper;
 
@@ -76,7 +73,7 @@ public class CollisionChecker implements IGameObject {
 
                 ArrayList<IGameObject> bullets = scene.objectsAt(MainScene.Layer.bullet);
                 for(int b = 0; b<=bullets.size()-1;b++){
-                    Bullet bullet = (Bullet)bullets.get(b);
+                    Enemy2Bullet bullet = (Enemy2Bullet)bullets.get(b);
 
                     //bullet과 플레이어가 부딪히면
                     if(CollisionHelper.collides(player,bullet)){

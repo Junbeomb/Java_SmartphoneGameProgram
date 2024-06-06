@@ -7,8 +7,8 @@ import android.util.Log;
 
 public class Metrics {
     private static final String TAG = Metrics.class.getSimpleName();
-    public static float width = 16.0f;
-    public static float height = 9.0f;
+    public static float width = 20.f;
+    public static float height = 9.f;
 
     public static final RectF borderRect = new RectF(0, 0, Metrics.width, Metrics.height);
     public static final RectF screenRect = new RectF();
@@ -38,6 +38,8 @@ public class Metrics {
             transformMatrix.setTranslate(0, (h - w / game_ratio) / 2);
             transformMatrix.preScale(scale, scale);
         }
+
+
         transformMatrix.invert(invertedMatrix);
         screenRect.set(0, 0, w, h);
         invertedMatrix.mapRect(screenRect);

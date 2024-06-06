@@ -2,11 +2,9 @@ package com.example.project.CatchMonster.game;
 
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
 
 import com.example.project.framework.interfaces.IBoxCollidable;
 import com.example.project.framework.objects.SheetSprite;
-import com.example.project.framework.scene.Scene;
 
 public class Enemy2 extends SheetSprite implements IBoxCollidable{
 
@@ -129,7 +127,7 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
 
 
     public void attackBullet(){
-        Bullet bullet = Bullet.get(x, y , (float)speed);
+        Enemy2Bullet bullet = Enemy2Bullet.get(x, y , (float)speed);
         scene.add(MainScene.Layer.bullet, bullet);
         //Scene.top().add(MainScene.Layer.bullet, Bullet.get(x, y,(float)speed));
     }

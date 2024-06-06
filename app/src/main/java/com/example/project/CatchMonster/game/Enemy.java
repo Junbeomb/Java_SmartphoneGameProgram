@@ -76,7 +76,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         if(speed > 0.f){
             dx = dx + (float)speed;
             setPosition(dx, 6.5f, 2.0f, 2.0f);
-            if(dx >= 16.f){
+            if(dx >= 20.f){
                 speed *= -1;
             }
         }
