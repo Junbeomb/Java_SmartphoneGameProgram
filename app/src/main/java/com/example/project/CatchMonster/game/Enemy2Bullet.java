@@ -18,6 +18,8 @@ public class Enemy2Bullet extends Sprite implements IBoxCollidable, IRecyclable 
 
     private float bounceTimer=0.f;
     private float bounceSize = BULLET_WIDTH;  // Added to track size during bounce state
+
+    private RectF collisionRect = new RectF();
     private float rotationAngle = 0.f;
 
     public enum State {
@@ -54,6 +56,14 @@ public class Enemy2Bullet extends Sprite implements IBoxCollidable, IRecyclable 
             return new Enemy2Bullet(x,y,direction,true);
     }
 
+    private void fixCollisionRect() {
+        collisionRect.set(
+                dstRect.left + 0.2f,
+                dstRect.top + 0.3f,
+                dstRect.right - 0.2f,
+                dstRect.bottom - 0.3f);
+    }
+
     private void setState(Enemy2Bullet.State state) {
         this.state = state;
     }
@@ -61,6 +71,8 @@ public class Enemy2Bullet extends Sprite implements IBoxCollidable, IRecyclable 
     @Override
     public void update(float elapsedSeconds) {
         super.update(elapsedSeconds);
+
+        fixCollisionRect();
 
         if (dstRect.right < 0.f || dstRect.left > 20.f) {
             Scene.top().remove(MainScene.Layer.bullet, this);
@@ -121,7 +133,7 @@ public class Enemy2Bullet extends Sprite implements IBoxCollidable, IRecyclable 
         //return new RectF(0,0,0,0);
         if(state == State.bounce) return new RectF(0,0,0,0);
 
-        return dstRect;
+        return collisionRect;
     }
 
     @Override

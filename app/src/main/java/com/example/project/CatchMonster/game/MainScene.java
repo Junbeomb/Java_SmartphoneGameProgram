@@ -21,13 +21,13 @@ public class MainScene extends Scene {
     public int remainMonster;
 
     public enum Layer {
-        bg, enemy,enemy2,enemy3, bullet,bossLighting,bossFire, collisionBox, player, ui,touch,effect, controller,COUNT
+        bg, enemy,enemy2,enemy3,trap1, bullet,bossLighting,bossFire,bossBomb, collisionBox, player, ui,touch,effect, controller,COUNT
     }
     public MainScene() {
 
         initLayers(Layer.COUNT);
 
-        currentStage = 2;
+        currentStage = 1;
         nextStageToggle = true;
 
 
@@ -38,7 +38,7 @@ public class MainScene extends Scene {
         add(Layer.controller, new CollisionChecker(this, player));
 
         for(int i=0;i<player.heart;i = i+1){
-            add(Layer.ui, new UI(R.mipmap.hero_face,1.5f * i + 1.f,1.5f,1.8f,1.8f));
+            add(Layer.ui, new UI(R.mipmap.hero_face,1.5f * i + 0.8f,1.5f,1.3f,1.3f));
         }
 
         add(Layer.touch, new Button(R.mipmap.arrow_left, 1.5f, 8.3f, 2.0f, 0.75f, new Button.Callback() {
@@ -63,6 +63,35 @@ public class MainScene extends Scene {
                 //Log.d(TAG, "Button: Slide " + action);
                 player.attack(action == Button.Action.pressed);
                 //add(Layer.collisionBox, new SwordBox(player.dx + (player.heroSpeed*10.0f),6.5f, player));
+                return true;
+            }
+        }));
+
+        add(Layer.touch, new Button(R.mipmap.catchmonster_cheatingbutton, 16.0f , 1.5f, 0.8f, 0.8f, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                StageOneStart();
+                currentStage = 1;
+                player.HPMax();
+                //player에 회복하는 기능 추가하기
+                return true;
+            }
+        }));
+        add(Layer.touch, new Button(R.mipmap.catchmonster_cheatingbutton, 17.5f , 1.5f, 0.8f, 0.8f, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                StageTwoStart();
+                currentStage = 2;
+                player.HPMax();
+                return true;
+            }
+        }));
+        add(Layer.touch, new Button(R.mipmap.catchmonster_cheatingbutton, 19.f , 1.5f, 0.8f, 0.8f, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                StageThreeStart();
+                currentStage = 3;
+                player.HPMax();
                 return true;
             }
         }));
@@ -99,13 +128,43 @@ public class MainScene extends Scene {
             if(nextStageDelayCurrent > nextStageDelay){
                 nextStageDelayCurrent = 0.f;
                 nextStageToggle = true;
-                currentStage = currentStage +1;
+                currentStage += 1;
             }
+        }
+    }
+
+    public void removeAll(){
+        //이전의 objects 모두 제거
+        ArrayList<IGameObject> enemies = this.objectsAt(MainScene.Layer.enemy);
+        ArrayList<IGameObject> enemies2 = this.objectsAt(MainScene.Layer.enemy2);
+        ArrayList<IGameObject> enemies3 = this.objectsAt(MainScene.Layer.enemy3);
+        ArrayList<IGameObject> traps = this.objectsAt(MainScene.Layer.trap1);
+
+        for(int i=enemies.size()-1;i>=0;i--){
+            Enemy enemy = (Enemy)enemies.get(i);
+            remove(MainScene.Layer.enemy, enemy);
+        }
+        for(int i=enemies2.size()-1;i>=0;i--){
+            Enemy2 enemy2 = (Enemy2)enemies2.get(i);
+            remove(MainScene.Layer.enemy2, enemy2);
+        }
+        for(int i=enemies3.size()-1;i>=0;i--){
+            Enemy3 enemy3 = (Enemy3)enemies3.get(i);
+            remove(MainScene.Layer.enemy3, enemy3);
+        }
+        for(int i=traps.size()-1;i>=0;i--){
+            Trap1 t = (Trap1)traps.get(i);
+            remove(MainScene.Layer.trap1, t);
         }
     }
     public void StageOneStart(){
 
+        removeAll();
+
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage2bg, 0.2f));
+
+        add(Layer.trap1, new Trap1(3.5f,0.5f));
+        add(Layer.trap1, new Trap1(5.5f,0.5f));
 
         int monsterCount = 1;
         for(int i=0;i<monsterCount;i++){
@@ -114,16 +173,15 @@ public class MainScene extends Scene {
         remainMonster = monsterCount;
     }
 
+
     public void StageTwoStart(){
 
-        //그 전의 enemy 모두 제거
-        ArrayList<IGameObject> enemies = this.objectsAt(MainScene.Layer.enemy);
-        for(int i=enemies.size()-1;i>=0;i--){
-            Enemy enemy = (Enemy)enemies.get(i);
-            this.remove(MainScene.Layer.enemy, enemy);
-        }
+        removeAll();
 
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage3bg, 0.2f));
+
+        add(Layer.trap1, new Trap1(2.5f,0.5f));
+        add(Layer.trap1, new Trap1(7.5f,0.5f));
 
         int monsterCount = 1;
         for(int i=0;i<monsterCount;i++){
@@ -134,15 +192,9 @@ public class MainScene extends Scene {
 
     public void StageThreeStart(){
 
-        //그 전의 enemy 모두 제거
-        ArrayList<IGameObject> enemies = this.objectsAt(MainScene.Layer.enemy2);
-        for(int i=enemies.size()-1;i>=0;i--){
-            Enemy2 enemy = (Enemy2)enemies.get(i);
-            this.remove(MainScene.Layer.enemy2, enemy);
-        }
+        removeAll();
 
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_bossbg, 0.2f));
-
 
         int monsterCount = 1;
         add(Layer.enemy3, new Enemy3(R.mipmap.catchmonster_boss,this));

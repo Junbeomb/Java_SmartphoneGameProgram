@@ -20,11 +20,14 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
     protected float speed = 0.f;
 
     protected MainScene scene;
-    protected float maxHp = 100.f;
+    protected float maxHp = 40.f;
     protected float currentHp;
 
     protected float WaitingTime;
     protected float CurrentTime;
+    private RectF collisionRect = new RectF();
+
+    private boolean attackToggle = false;
 
     public Player player;
     protected Rect[][] srcRectsArray = {
@@ -58,6 +61,8 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
         WaitingTime = 2.f;
         setState(State.idle);
 
+        fixCollisionRect();
+
         speed = (float)Math.random();
         if(speed > 0.5f) speed = -0.02f;
         else speed = 0.02f;
@@ -72,30 +77,32 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
 
     @Override
     public void update(float elapsedSeconds) {
+        fixCollisionRect();
+        CurrentTime += elapsedSeconds;
 
         switch(state){
             case idle:
-                CurrentTime = CurrentTime + elapsedSeconds;
                 if(CurrentTime > WaitingTime){
                     CurrentTime = 0.f;
                     setState(Enemy2.State.walk);
                 }
                 break;
             case walk:
-                srcRects = makeRects(200, 201, 202, 203,204,205);
 
                 //player를 바라보고 있고 일정거리 내에 있으면 공격
                 if((speed < 0 && dx-player.dx > 0) || (speed> 0 && dx-player.dx < 0)){
                     if(Math.abs(dx - player.dx) <= 5.f){
-                        attackBullet();
+                        CurrentTime=0.f;
+                        attackToggle = false;
                         setState(State.attack);
                         break;
                     }
                 }
 
+                srcRects = makeRects(200, 201, 202, 203,204,205);
                 //아니면 좌우로 이동
                 if(speed > 0.f){
-                    dx = dx + (float) speed;
+                    dx = dx + (float) speed * elapsedSeconds * 60;
                     setPosition(dx, 6.5f, 2.0f, 2.0f);
 
                     if(dx >= 16.f){
@@ -103,7 +110,7 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
                     }
                 }
                 else{
-                    dx = dx + (float) speed;
+                    dx = dx + (float) speed * elapsedSeconds * 60;
                     setPosition(dx,6.5f,2.0f,2.0f);
 
                     if(dx <= 0.f){
@@ -112,12 +119,18 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
                 }
                 break;
             case attack:
-                CurrentTime = CurrentTime + elapsedSeconds;
-                if(CurrentTime > 1.0f){
+                if(attackToggle == false && CurrentTime > 2.0f){
+                    attackToggle = true;
+                    attackBullet();
+                }
+                if(CurrentTime > 2.5f){
+                    this.fps = 8;
+                    attackToggle = false;
                     CurrentTime = 0.f;
                     setState(Enemy2.State.walk);
                 }
-                srcRects = makeRects(400, 401, 402, 403, 404);
+                this.fps = 4;
+                srcRects = makeRects(401,403,403,403, 404,404,404,404,404,404);
                 break;
             case die:
                 break;
@@ -126,18 +139,26 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
     }
 
 
+    private void fixCollisionRect() {
+        collisionRect.set(
+                dstRect.left + 0.3f,
+                dstRect.top + 0.3f,
+                dstRect.right - 0.2f,
+                dstRect.bottom - 0.2f);
+    }
     public void attackBullet(){
         Enemy2Bullet bullet = Enemy2Bullet.get(x, y , (float)speed);
         scene.add(MainScene.Layer.bullet, bullet);
-        //Scene.top().add(MainScene.Layer.bullet, Bullet.get(x, y,(float)speed));
     }
 
     public void receiveDamage(float damageAmount){
         currentHp = currentHp - damageAmount;
+
         if(currentHp <= 0){
+            this.fps = 8;
             setState(State.die);
             srcRects = srcRectsArray[3];
-            this.scene.remainMonster =this.scene.remainMonster -1;
+            this.scene.remainMonster -= 1;
         }
     }
 
@@ -145,7 +166,7 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
     public RectF getCollisionRect() {
         if(state == State.die) return new RectF(0,0,0,0);
 
-        return dstRect;
+        return collisionRect;
     }
 
 }

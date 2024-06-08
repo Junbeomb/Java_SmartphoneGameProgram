@@ -9,7 +9,7 @@ import com.example.project.framework.objects.SheetSprite;
 public class Enemy extends SheetSprite implements IBoxCollidable{
 
     public enum State {
-        idle, walk, attack, hurt, die
+        idle, walk, die
     }
     protected Enemy.State state = Enemy.State.idle;
     protected float dx = 5.f;
@@ -21,8 +21,6 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
     protected float spawnWaitingTime;
     protected float spawnCurrentTime;
     protected static float speed;
-
-    private float hurtCount=0.f;
 
     private float knockbackDirection;
     protected Rect[][] srcRectsArray = {
@@ -65,29 +63,6 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         this.state = state;
     }
 
-    private void walkEnemyFunc(){
-        if(currentHp == 3)
-            srcRects = makeRects(100, 101, 102, 103);
-        else if(currentHp == 2)
-            srcRects = makeRects(300, 301, 302, 303);
-        else if(currentHp == 1)
-            srcRects = makeRects(400, 401, 402, 403);
-
-        if(speed > 0.f){
-            dx = dx + (float)speed;
-            setPosition(dx, 6.5f, 2.0f, 2.0f);
-            if(dx >= 20.f){
-                speed *= -1;
-            }
-        }
-        else{
-            dx = dx + (float) speed;
-            setPosition(dx,6.5f,2.0f,2.0f);
-            if(dx <= 0.f){
-                speed *= -1;
-            }
-        }
-    }
     @Override
     public void update(float elapsedSeconds) {
 
@@ -99,15 +74,27 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
                 }
                 break;
             case walk:
-                walkEnemyFunc();
-                break;
-            case hurt:
-                hurtCount += elapsedSeconds;
-                if(hurtCount > 2.0f){
-                    hurtCount = 0.f;
-                    setState(State.walk);
+                if(currentHp == 3)
+                    srcRects = makeRects(100, 101, 102, 103);
+                else if(currentHp == 2)
+                    srcRects = makeRects(300, 301, 302, 303);
+                else if(currentHp == 1)
+                    srcRects = makeRects(400, 401, 402, 403);
+
+                if(speed > 0.f){
+                    dx = dx + (float)speed * elapsedSeconds * 60;
+                    setPosition(dx, 6.5f, 2.0f, 2.0f);
+                    if(dx >= 20.f){
+                        speed *= -1;
+                    }
                 }
-                walkEnemyFunc();
+                else{
+                    dx = dx + (float) speed * elapsedSeconds * 60;
+                    setPosition(dx,6.5f,2.0f,2.0f);
+                    if(dx <= 0.f){
+                        speed *= -1;
+                    }
+                }
                 break;
             case die:
                 break;
@@ -115,10 +102,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
     }
 
     public void receiveDamage(float damageAmount,float attackDirection){
-        if(state == Enemy.State.hurt) return;
-        setState(State.hurt);
         currentHp -= 1;
-
         speed = speed * 2;
         if(attackDirection>=0) { //몬스터가 오른쪽
             if (speed < 0) speed *= -1;

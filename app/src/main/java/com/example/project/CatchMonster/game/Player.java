@@ -27,7 +27,8 @@ public class Player extends SheetSprite implements IBoxCollidable {
 
     private MainScene scene;
     public float heroSpeed = 0.1f;
-    protected float dx = 5.f;
+    protected float dx = 8.f;
+    protected float dy = 6.5f;
 
     protected float attackTime = 0.f;
     protected float hurtTime = 0.f;
@@ -57,7 +58,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
     }
     public Player(MainScene scene) {
         super(R.mipmap.catchmonster_herosprite, 8);
-        setPosition(dx, 6.5f, 2.0f, 2.0f);
+        setPosition(dx, dy, 2.0f, 2.0f);
 
         this.scene = scene;
 
@@ -79,13 +80,13 @@ public class Player extends SheetSprite implements IBoxCollidable {
             case goLeft:
                 srcRects = makeRects(101, 103, 105);
                 heroSpeed = -0.1f;
-                dx = dx + heroSpeed;
+                dx = dx + heroSpeed * elapsedSeconds * 60;
                 setPosition(dx, 6.5f, 2.0f, 2.0f);
                 break;
             case goRight:
                 srcRects = makeRects(101, 103, 105);
                 heroSpeed = 0.1f;
-                dx = dx + heroSpeed;
+                dx = dx + heroSpeed * elapsedSeconds * 60;
                 setPosition(dx, 6.5f, 2.0f, 2.0f);
                 break;
             case attack:
@@ -98,7 +99,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
                 break;
             case hurt:
                 hurtTime = hurtTime + elapsedSeconds;
-                Log.d(TAG, "Collision !!");
+                //Log.d(TAG, "Collision !!");
                 srcRects = makeRects(204,205);
                 if(hurtTime > 0.5f){
                     invincibility = true;//무적 상태 변환
@@ -184,6 +185,21 @@ public class Player extends SheetSprite implements IBoxCollidable {
 
 
         setState(State.hurt);
+    }
+
+    public void HPMax(){
+        ArrayList<IGameObject> heartUi = this.scene.objectsAt(MainScene.Layer.ui);
+        for (int u = heartUi.size() - 1; u >= 0; u--){
+            UI uih = (UI)heartUi.get(u);
+            this.scene.remove(MainScene.Layer.ui,uih);
+        }
+
+        this.heart = 6;
+        for(int i=0;i<6;i = i+1){
+            this.scene.add(MainScene.Layer.ui, new UI(R.mipmap.hero_face,1.5f * i + 0.8f,1.5f,1.3f,1.3f));
+        }
+
+        setState(State.idle);
     }
 
     @Override
