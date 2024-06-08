@@ -182,6 +182,8 @@ public class MainScene extends Scene {
 
         add(Layer.trap1, new Trap1(2.5f,0.5f));
         add(Layer.trap1, new Trap1(7.5f,0.5f));
+        add(Layer.trap1, new Trap1(3.5f,0.5f));
+        add(Layer.trap1, new Trap1(15.5f,0.5f));
 
         int monsterCount = 1;
         for(int i=0;i<monsterCount;i++){

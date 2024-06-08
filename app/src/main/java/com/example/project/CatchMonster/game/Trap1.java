@@ -10,8 +10,9 @@ import com.example.project.framework.scene.Scene;
 
 public class Trap1 extends SheetSprite implements IBoxCollidable {
 
-    public float seconds = 0.f;
+    public float seconds;
     private boolean drop = false;
+    private boolean ready = false;
     private boolean pang = false;
     protected Rect[][] srcRectsArray = {
             makeRects(0,1,2,3,4,5,6,7,8,9,10,11),
@@ -56,19 +57,34 @@ public class Trap1 extends SheetSprite implements IBoxCollidable {
         }
         return rects;
     }
+
+    private float startTime;
     public Trap1(float x, float y) {
         super(R.mipmap.catchmonster_trap1, 5);
         setPosition(x, y, 1.f, 1.f);
-        srcRects = makeRects(0,1,2,3,4, 5,6,7,8,9, 10,11);
+
+        startTime = (float)Math.random();
+        startTime*=10;
+        ready = false;
+
         seconds = 0.f;
+        srcRects = makeRects(0);
     }
 
     private float yy;
     private boolean pangEarly = false;
     @Override
     public void update(float elapsedSeconds) {
+
         seconds += elapsedSeconds;
-        if(!drop && seconds >= 2.4){
+
+        if(!ready && seconds >= startTime){
+            ready = true;
+            srcRects = makeRects(0,1,2,3,4, 5,6,7,8,9, 10,11);
+            seconds = 0.f;
+        }
+
+        if(ready && !drop && seconds >= 2.0){
             drop = true;
         }
         if(drop){
