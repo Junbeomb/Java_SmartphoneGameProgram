@@ -10,7 +10,7 @@ public class CatchMonsterActivity extends GameActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new MainScene().push();
+        new MainScene(this).push();
     }
 
 }

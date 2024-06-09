@@ -1,5 +1,7 @@
 package com.example.project.CatchMonster.game;
 
+import android.content.Context;
+
 import com.example.project.CatchMonster.R;
 import com.example.project.framework.interfaces.IGameObject;
 import com.example.project.framework.objects.Button;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
     private final Player player;
+    private Context context;
     public int currentStage;
     private boolean nextStageToggle;
 
@@ -20,11 +23,13 @@ public class MainScene extends Scene {
 
     public int remainMonster;
 
+    private Sound soundPlayer;
+
     public enum Layer {
         bg, enemy,enemy2,enemy3,trap1, bullet,bossLighting,bossFire,bossBomb, collisionBox, player, ui,touch,effect, controller,COUNT
     }
-    public MainScene() {
-
+    public MainScene(Context context) {
+        this.context = context;
         initLayers(Layer.COUNT);
 
         currentStage = 1;
@@ -60,9 +65,13 @@ public class MainScene extends Scene {
         add(Layer.touch, new Button(R.mipmap.attack_button, 16.0f, 8.3f, 1.2f, 1.2f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
-                //Log.d(TAG, "Button: Slide " + action);
                 player.attack(action == Button.Action.pressed);
-                //add(Layer.collisionBox, new SwordBox(player.dx + (player.heroSpeed*10.0f),6.5f, player));
+
+                if(action==Button.Action.pressed){
+                    soundPlayer = new Sound();
+                    soundPlayer.playSound(context, R.raw.slashsound,20.f);
+                }
+
                 return true;
             }
         }));
