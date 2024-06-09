@@ -14,15 +14,14 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     private RectF collisionRect = new RectF();
 
     public enum State {
-        idle, walk, attack1, attack2, hurt, die
+        idle, walk, attack1, attack2,attack3, hurt, die
     }
     protected Enemy3.State state = Enemy3.State.idle;
     protected float maxHp = 100.f;
     protected float currentHp;
-    private float hurtCooltime = 1.2f;
-    private float hurtCooltimeCurrent =0.f;
-    private float skillCooltime = 5.f;
+    private float skillCooltime = 4.f;
     private float skillCoolCurrent = 0.f;
+    private boolean skill3Toggle = false;
     protected Rect[][] srcRectsArray = {
             makeRects(300, 301, 302, 303, 304), // State.running
     };
@@ -53,7 +52,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
         setState(State.idle);
         fixCollisionRect();
 
-        setPosition(8.0f, 5.0f, 6.0f, 6.0f);
+        setPosition(10.0f, 5.0f, 6.0f, 6.0f);
         srcRects = srcRectsArray[0];
     }
 
@@ -71,18 +70,26 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     @Override
     public void update(float elapsedSeconds) {
 
-        skillCoolCurrent = skillCoolCurrent + elapsedSeconds;
-        if(skillCoolCurrent > skillCooltime){
-            skillCoolCurrent = 0.f;
+        if(!skill3Toggle){
+            skillCoolCurrent = skillCoolCurrent + elapsedSeconds;
+            if(skillCoolCurrent > skillCooltime){
+                skillCoolCurrent = 0.f;
 
-            float tempRandom = (float)Math.random();
-            if(tempRandom > 0.5){
-                setState(State.attack2);
-            }
-            else{
-                setState(State.attack2);
+                float tempRandom = (float)Math.random();
+                if(tempRandom < 0.3){
+                    setState(State.attack3);
+                }
+                else if(tempRandom < 0.6){
+                    setState(State.attack3);
+                }
+                else{
+                    skill3Toggle = true;
+                    setState(State.attack3);
+                }
+
             }
         }
+
         switch(state){
             case idle:
                 srcRects = makeRects(300, 301, 302, 303, 304);
@@ -103,10 +110,18 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
                 }
                 setState(State.idle);
                 break;
-            case hurt:
-                hurtCooltimeCurrent = hurtCooltimeCurrent + elapsedSeconds;
-                if(hurtCooltimeCurrent > hurtCooltime){
-                    hurtCooltimeCurrent = 0.f;
+            case attack3:
+                skillCoolCurrent = skillCoolCurrent + elapsedSeconds;
+
+                srcRects = makeRects(1200);
+
+                if(skillCoolCurrent > 1.5f){
+                    skillCoolCurrent = 0.f;
+                    skill3Toggle = false;
+
+                    BossBombSkill fSkill = new BossBombSkill(10.0f, 5.f);
+                    scene.add(MainScene.Layer.bossBomb, fSkill);
+
                     setState(State.idle);
                 }
                 break;
@@ -117,15 +132,14 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     }
 
     public void receiveDamage(float damageAmount,SwordBox tempSb){
-        if(state == Enemy3.State.hurt|| state == Enemy3.State.die) return;
-        setState(State.hurt);
+        if(state == Enemy3.State.die) return;
 
         currentHp = currentHp - damageAmount;
 
         if(currentHp <= 0){
-            scene.remove(MainScene.Layer.enemy3, this);
-            this.scene.remainMonster =this.scene.remainMonster -1;
+            this.scene.remainMonster -= 1;
             setState(State.die);
+            scene.remove(MainScene.Layer.enemy3, this);
         }
     }
 
