@@ -119,6 +119,9 @@ public class MainScene extends Scene {
                 case 3:
                     StageThreeStart();
                     break;
+                case 4:
+                    StageFourStart();
+                    break;
             }
         }
 
@@ -203,5 +206,16 @@ public class MainScene extends Scene {
         remainMonster = monsterCount;
     }
 
+    public void StageFourStart(){
+
+        removeAll();
+        ArrayList<IGameObject> character = this.objectsAt(MainScene.Layer.player);
+        for(int i=character.size()-1;i>=0;i--){
+            Player t = (Player)character.get(i);
+            remove(MainScene.Layer.player, t);
+        }
+        add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_finish, 0.2f));
+
+    }
 
 }

@@ -67,6 +67,10 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     private void setState(Enemy3.State state) {
         this.state = state;
     }
+
+
+    private float skill1Rate = 0.3f;
+    private float skill2Rate = 0.6f;
     @Override
     public void update(float elapsedSeconds) {
 
@@ -76,13 +80,19 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
                 skillCoolCurrent = 0.f;
 
                 float tempRandom = (float)Math.random();
-                if(tempRandom < 0.3){
-                    setState(State.attack3);
+                if(tempRandom < skill1Rate){
+                    skill1Rate -=0.1f;
+                    skill2Rate = 0.6f;
+                    setState(State.attack1);
                 }
-                else if(tempRandom < 0.6){
-                    setState(State.attack3);
+                else if(tempRandom < skill2Rate){
+                    skill2Rate -=0.1f;
+                    skill1Rate = 0.3f;
+                    setState(State.attack2);
                 }
                 else{
+                    skill2Rate += 0.1f;
+                    skill1Rate = 0.3f;
                     skill3Toggle = true;
                     setState(State.attack3);
                 }
