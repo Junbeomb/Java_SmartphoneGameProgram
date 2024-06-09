@@ -1,8 +1,10 @@
 package com.example.project.CatchMonster.game;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import com.example.project.CatchMonster.R;
 import com.example.project.framework.interfaces.IBoxCollidable;
 import com.example.project.framework.objects.SheetSprite;
 
@@ -21,6 +23,8 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
     protected float spawnWaitingTime;
     protected float spawnCurrentTime;
     protected static float speed;
+    private Context context;
+    private Sound soundPlayer;
 
     private float knockbackDirection;
     protected Rect[][] srcRectsArray = {
@@ -44,11 +48,12 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         }
         return rects;
     }
-    public Enemy(int imageId,MainScene scene) {
+    public Enemy(int imageId, MainScene scene, Context context) {
         super(imageId, 8);
         this.scene = scene;
         currentHp = maxHp;
         spawnCurrentTime=0.f;
+        this.context = context;
         spawnWaitingTime = 2.f;
         setState(State.idle);
 
@@ -113,6 +118,10 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
 
         if(currentHp <= 0){
             setState(State.die);
+
+            soundPlayer = new Sound();
+            soundPlayer.playSound(context, R.raw.enemy1death,1);
+
             srcRects = makeRects(200, 201, 202, 203, 204, 205, 206, 207);
             this.scene.remainMonster =this.scene.remainMonster -1;
         }

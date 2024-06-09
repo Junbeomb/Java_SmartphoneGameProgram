@@ -24,6 +24,7 @@ public class MainScene extends Scene {
     public int remainMonster;
 
     private Sound soundPlayer;
+    private SoundBG soundBg;
 
     public enum Layer {
         bg, enemy,enemy2,enemy3,trap1, bullet,bossLighting,bossFire,bossBomb, collisionBox, player, ui,touch,effect, controller,COUNT
@@ -32,15 +33,17 @@ public class MainScene extends Scene {
         this.context = context;
         initLayers(Layer.COUNT);
 
+
+
         currentStage = 1;
         nextStageToggle = true;
 
 
         //add(Layer.controller, new EnemyGenerator())
 
-        player = new Player(this);
+        player = new Player(this,context);
         add(Layer.player, player);
-        add(Layer.controller, new CollisionChecker(this, player));
+        add(Layer.controller, new CollisionChecker(this, player, context));
 
         for(int i=0;i<player.heart;i = i+1){
             add(Layer.ui, new UI(R.mipmap.hero_face,1.5f * i + 0.8f,1.5f,1.3f,1.3f));
@@ -69,7 +72,7 @@ public class MainScene extends Scene {
 
                 if(action==Button.Action.pressed){
                     soundPlayer = new Sound();
-                    soundPlayer.playSound(context, R.raw.slashsound,20.f);
+                    soundPlayer.playSound(context, R.raw.slashsound,1.f);
                 }
 
                 return true;
@@ -173,6 +176,9 @@ public class MainScene extends Scene {
 
         removeAll();
 
+        soundBg = new SoundBG();
+        soundBg.playSound(context, R.raw.background,0.3f);
+
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage2bg, 0.2f));
 
         add(Layer.trap1, new Trap1(3.5f,0.5f));
@@ -180,7 +186,7 @@ public class MainScene extends Scene {
 
         int monsterCount = 1;
         for(int i=0;i<monsterCount;i++){
-            add(Layer.enemy, new Enemy(R.mipmap.catchmonster_monster1,this));
+            add(Layer.enemy, new Enemy(R.mipmap.catchmonster_monster1,this,context));
         }
         remainMonster = monsterCount;
     }
@@ -189,6 +195,9 @@ public class MainScene extends Scene {
     public void StageTwoStart(){
 
         removeAll();
+
+        soundBg = new SoundBG();
+        soundBg.playSound(context, R.raw.background,0.3f);
 
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_stage3bg, 0.2f));
 
@@ -199,7 +208,7 @@ public class MainScene extends Scene {
 
         int monsterCount = 1;
         for(int i=0;i<monsterCount;i++){
-            add(Layer.enemy2, new Enemy2(R.mipmap.catchmonster_monster2,this,player));
+            add(Layer.enemy2, new Enemy2(R.mipmap.catchmonster_monster2,this,player, context));
         }
         remainMonster = monsterCount;
     }
@@ -208,10 +217,13 @@ public class MainScene extends Scene {
 
         removeAll();
 
+        soundBg = new SoundBG();
+        soundBg.playSound(context, R.raw.background,0.3f);
+
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_bossbg, 0.2f));
 
         int monsterCount = 1;
-        add(Layer.enemy3, new Enemy3(R.mipmap.catchmonster_boss,this));
+        add(Layer.enemy3, new Enemy3(R.mipmap.catchmonster_boss,this,context));
         remainMonster = monsterCount;
     }
 

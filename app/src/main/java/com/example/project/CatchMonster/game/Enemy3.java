@@ -1,8 +1,10 @@
 package com.example.project.CatchMonster.game;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import com.example.project.CatchMonster.R;
 import com.example.project.framework.interfaces.IBoxCollidable;
 import com.example.project.framework.objects.SheetSprite;
 
@@ -10,7 +12,8 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
     protected float dx = 5.f;
 
     protected MainScene scene;
-
+    private Context context;
+    private Sound soundPlayer;
     private RectF collisionRect = new RectF();
 
     public enum State {
@@ -45,12 +48,13 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
         }
         return rects;
     }
-    public Enemy3(int imageId, MainScene scene) {
+    public Enemy3(int imageId, MainScene scene, Context context) {
         super(imageId, 5);
         this.scene = scene;
         currentHp = maxHp;
         setState(State.idle);
         fixCollisionRect();
+        this.context = context;
 
         setPosition(10.0f, 5.0f, 6.0f, 6.0f);
         srcRects = srcRectsArray[0];
@@ -105,9 +109,13 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
                 srcRects = makeRects(300, 301, 302, 303, 304);
                 break;
             case attack1:
+
+                soundPlayer = new Sound();
+                soundPlayer.playSound(context, R.raw.bosslightning,1);
+
                 for(int i=0;i<5;i++){
                     float randomX = (float)Math.random() * 16;
-                    BossLigtningSkill lSkill = new BossLigtningSkill(randomX, y);
+                    BossLigtningSkill lSkill = new BossLigtningSkill(randomX, y, this.context);
                     scene.add(MainScene.Layer.bossLighting, lSkill);
                 }
                 setState(State.idle);
@@ -129,7 +137,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
                     skillCoolCurrent = 0.f;
                     skill3Toggle = false;
 
-                    BossBombSkill fSkill = new BossBombSkill(10.0f, 5.f);
+                    BossBombSkill fSkill = new BossBombSkill(10.0f, 5.f, this.context);
                     scene.add(MainScene.Layer.bossBomb, fSkill);
 
                     setState(State.idle);
@@ -148,6 +156,10 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
 
         if(currentHp <= 0){
             this.scene.remainMonster -= 1;
+
+            soundPlayer = new Sound();
+            soundPlayer.playSound(context, R.raw.bossdeath,1);
+
             setState(State.die);
             scene.remove(MainScene.Layer.enemy3, this);
         }

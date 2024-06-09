@@ -1,5 +1,6 @@
 package com.example.project.CatchMonster.game;
 
+import android.content.Context;
 import android.graphics.Canvas;
 
 import java.util.ArrayList;
@@ -13,11 +14,14 @@ public class CollisionChecker implements IGameObject {
     private static final String TAG = CollisionChecker.class.getSimpleName();
     private final MainScene scene;
     private final Player player;
+    private Context context;
 
+    private Sound soundPlayer;
 
-    public CollisionChecker(Scene scene, Player player) {
+    public CollisionChecker(Scene scene, Player player, Context context) {
         this.scene = (MainScene)scene;
         this.player = player;
+        this.context = context;
     }
 
     @Override
@@ -34,6 +38,7 @@ public class CollisionChecker implements IGameObject {
                     //플레이어와 몬스터가 부딪히면
                     if (CollisionHelper.collides(player, enemy)) {
                         player.hurt(scene); //플레이어 데미지
+
                         break;
                     }
 
@@ -64,8 +69,6 @@ public class CollisionChecker implements IGameObject {
 
                     //bullet과 플레이어가 부딪히면
                     if(CollisionHelper.collides(player,bullet)){
-//                        HitEffect he = new HitEffect(player.dx,6.5f);
-//                        scene.add(MainScene.Layer.effect, he);
                         bullet.bombBullet(player.dx,scene);
                         player.hurt(scene);
                     }
@@ -76,6 +79,10 @@ public class CollisionChecker implements IGameObject {
                         if(CollisionHelper.collides(bullet,tempSb)){
                             bullet.bounceBullet();
                             tempSb.removeCollision(R.mipmap.catchmonster_herohiteffect,scene,tempSb.currentX);
+
+                            soundPlayer = new Sound();
+                            soundPlayer.playSound(context, R.raw.swordhitbullet,1);
+
                             //scene.remove(MainScene.Layer.bullet, bullet);
                             break;
                         }

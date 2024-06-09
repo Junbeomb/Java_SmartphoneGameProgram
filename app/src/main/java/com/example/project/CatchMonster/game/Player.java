@@ -1,5 +1,6 @@
 package com.example.project.CatchMonster.game;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
@@ -27,6 +28,8 @@ public class Player extends SheetSprite implements IBoxCollidable {
 
     private MainScene scene;
     public float heroSpeed = 0.1f;
+    private Context context;
+    private Sound soundPlayer;
     protected float dx = 8.f;
     protected float dy = 6.5f;
 
@@ -34,6 +37,7 @@ public class Player extends SheetSprite implements IBoxCollidable {
     protected float hurtTime = 0.f;
     protected boolean invincibility = false;
     protected float invincibilityTime = 0.f;
+
     protected Rect[][] srcRectsArray = {
             makeRects(101, 103, 105), // State.running
             makeRects(7, 8),               // State.jump
@@ -56,12 +60,12 @@ public class Player extends SheetSprite implements IBoxCollidable {
         }
         return rects;
     }
-    public Player(MainScene scene) {
+    public Player(MainScene scene, Context context) {
         super(R.mipmap.catchmonster_herosprite, 8);
         setPosition(dx, dy, 2.0f, 2.0f);
 
         this.scene = scene;
-
+        this.context = context;
         srcRects = srcRectsArray[state.ordinal()];
     }
 
@@ -167,6 +171,9 @@ public class Player extends SheetSprite implements IBoxCollidable {
         if(state == State.hurt || invincibility || state == State.die) return;
 
         ArrayList<IGameObject> heartUi = scene.objectsAt(MainScene.Layer.ui);
+
+        soundPlayer = new Sound();
+        soundPlayer.playSound(context, R.raw.playerhit,1);
 
         for (int u = heartUi.size() - 1; u >= 0; u--){
             if(u == this.heart-1){

@@ -1,5 +1,6 @@
 package com.example.project.CatchMonster.game;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -10,6 +11,8 @@ import com.example.project.framework.scene.Scene;
 
 public class BossBombSkill extends SheetSprite implements IBoxCollidable {
 
+    private Sound soundPlayer;
+    private Context context;
     private boolean noDamage;
     private RectF collisionRect = new RectF();
     protected Rect[][] srcRectsArray = {
@@ -33,11 +36,14 @@ public class BossBombSkill extends SheetSprite implements IBoxCollidable {
         }
         return rects;
     }
-    public BossBombSkill(float x, float y) {
+    public BossBombSkill(float x, float y, Context context) {
         super(R.mipmap.catchnomster_bossbombskill, 4);
         setPosition(x, y, 10.f, 10.f);
         fixCollisionRect();
         noDamage = true;
+        this.context = context;
+        soundPlayer = new Sound();
+        soundPlayer.playSound(context, R.raw.bossbomb,1);
         srcRects = makeRects(0, 1, 2, 3, 4, 5, 6, 7);
     }
 
@@ -49,6 +55,7 @@ public class BossBombSkill extends SheetSprite implements IBoxCollidable {
         //1초 지난뒤에 데미지 주기
         if(noDamage && seconds >=1.0f){
             noDamage = false;
+
         }
 
         if(seconds >= 2.0f){

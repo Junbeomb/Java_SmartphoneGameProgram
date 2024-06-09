@@ -1,5 +1,6 @@
 package com.example.project.CatchMonster.game;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -11,6 +12,7 @@ import com.example.project.framework.scene.Scene;
 public class BossLigtningSkill extends SheetSprite implements IBoxCollidable {
 
     private boolean noDamage;
+    private Sound soundPlayer;
     private RectF collisionRect = new RectF();
     protected Rect[][] srcRectsArray = {
             makeRects(300, 301, 302, 303, 304, 305, 306, 307), // State.running
@@ -33,11 +35,12 @@ public class BossLigtningSkill extends SheetSprite implements IBoxCollidable {
         }
         return rects;
     }
-    public BossLigtningSkill(float x, float y) {
+    public BossLigtningSkill(float x, float y, Context context) {
         super(R.mipmap.catchmonster_lightning, 4);
         setPosition(x, 4.0f, 1.5f, 11.f);
         fixCollisionRect();
         noDamage = true;
+
         srcRects = makeRects(300, 301, 302, 303, 304, 305, 306, 307, 308);
     }
 

@@ -5,14 +5,8 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.audiofx.Equalizer;
 import android.util.Log;
-import com.example.project.CatchMonster.R;
 
-import android.content.Context;
-import android.media.MediaPlayer;
-import android.util.Log;
-import com.example.project.CatchMonster.R;
-
-public class Sound {
+public class SoundBG {
     private MediaPlayer mediaPlayer;
     private Equalizer equalizer;
     public void playSound(Context context, int resId, float volume) {
