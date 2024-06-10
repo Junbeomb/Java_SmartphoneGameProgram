@@ -124,18 +124,25 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
                 }
                 break;
             case attack:
-                if(attackToggle == false && CurrentTime > 2.0f){
+                if(attackToggle == false && CurrentTime > 2.3f){
                     attackToggle = true;
                     attackBullet();
                 }
-                if(CurrentTime > 2.5f){
+                if(CurrentTime >= 2.5f){
                     this.fps = 8;
                     attackToggle = false;
                     CurrentTime = 0.f;
                     setState(Enemy2.State.walk);
+                    break;
                 }
-                this.fps = 4;
-                srcRects = makeRects(401,403,403,403, 404,404,404,404,404,404);
+
+                if(CurrentTime <= 2.0f){
+                    srcRects = makeRects(200, 201, 202, 203,204,205);
+                }
+                else if(CurrentTime > 2.0f){
+                    srcRects = makeRects(401,403,404,404);
+                }
+
                 break;
             case die:
                 break;

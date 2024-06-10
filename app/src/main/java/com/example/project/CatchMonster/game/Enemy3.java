@@ -96,7 +96,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
                 }
                 else{
                     skill2Rate += 0.1f;
-                    skill1Rate = 0.3f;
+                    skill1Rate = 0.4f;
                     skill3Toggle = true;
                     setState(State.attack3);
                 }
@@ -118,6 +118,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
                     BossLigtningSkill lSkill = new BossLigtningSkill(randomX, y, this.context);
                     scene.add(MainScene.Layer.bossLighting, lSkill);
                 }
+
                 setState(State.idle);
                 break;
             case attack2:
@@ -126,6 +127,7 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
                     BossFireSkill fSkill = new BossFireSkill(randomX, y);
                     scene.add(MainScene.Layer.bossFire, fSkill);
                 }
+                skillCoolCurrent = skillCooltime;
                 setState(State.idle);
                 break;
             case attack3:
