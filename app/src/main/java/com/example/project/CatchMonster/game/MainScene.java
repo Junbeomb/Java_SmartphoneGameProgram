@@ -233,6 +233,13 @@ public class MainScene extends Scene {
             Player t = (Player)character.get(i);
             remove(MainScene.Layer.player, t);
         }
+
+        ArrayList<IGameObject> fires = this.objectsAt(MainScene.Layer.bossFire);
+        for(int i=fires.size()-1;i>=0;i--){
+            BossFireSkill t = (BossFireSkill)fires.get(i);
+            remove(MainScene.Layer.bossFire, t);
+        }
+
         add(Layer.bg, new VertScrollBackground(R.mipmap.catchmonster_finish, 0.2f));
 
     }

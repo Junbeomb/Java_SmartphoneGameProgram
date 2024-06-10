@@ -85,18 +85,18 @@ public class Enemy3 extends SheetSprite implements IBoxCollidable{
 
                 float tempRandom = (float)Math.random();
                 if(tempRandom < skill1Rate){
-                    skill1Rate -=0.1f;
-                    skill2Rate = 0.6f;
+                    skill1Rate = 0.33f;
+                    skill2Rate = 0.66f;
                     setState(State.attack1);
                 }
                 else if(tempRandom < skill2Rate){
-                    skill2Rate -=0.1f;
-                    skill1Rate = 0.3f;
+                    skill2Rate = 0.77f;
+                    skill1Rate = 0.66f;
                     setState(State.attack2);
                 }
                 else{
-                    skill2Rate += 0.1f;
-                    skill1Rate = 0.4f;
+                    skill2Rate = 0.999f;
+                    skill1Rate = 0.45f;
                     skill3Toggle = true;
                     setState(State.attack3);
                 }
