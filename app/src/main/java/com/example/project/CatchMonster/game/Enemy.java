@@ -25,6 +25,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
     protected static float speed;
     private Context context;
     private Sound soundPlayer;
+    private RectF collisionRect = new RectF();
 
     private float knockbackDirection;
     protected Rect[][] srcRectsArray = {
@@ -68,9 +69,16 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         this.state = state;
     }
 
+    private void fixCollisionRect() {
+        collisionRect.set(
+                dstRect.left + 0.3f,
+                dstRect.top + 0.3f,
+                dstRect.right - 0.2f,
+                dstRect.bottom - 0.2f);
+    }
     @Override
     public void update(float elapsedSeconds) {
-
+        fixCollisionRect();
         switch(state){
             case idle:
                 spawnCurrentTime = spawnCurrentTime + elapsedSeconds;
@@ -79,12 +87,15 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
                 }
                 break;
             case walk:
-                if(currentHp == 3)
+                if(currentHp == 3){
                     srcRects = makeRects(100, 101, 102, 103);
-                else if(currentHp == 2)
+                }
+                else if(currentHp == 2){
                     srcRects = makeRects(300, 301, 302, 303);
-                else if(currentHp == 1)
+                }
+                else if(currentHp == 1){
                     srcRects = makeRects(400, 401, 402, 403);
+                }
 
                 if(speed > 0.f){
                     dx = dx + (float)speed * elapsedSeconds * 60;
@@ -109,6 +120,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
     public void receiveDamage(float damageAmount,float attackDirection){
         currentHp -= 1;
         speed = speed * 2;
+        this.fps *= 2;
         if(attackDirection>=0) { //몬스터가 오른쪽
             if (speed < 0) speed *= -1;
         }
@@ -117,6 +129,8 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         }
 
         if(currentHp <= 0){
+            this.fps = 8;
+
             setState(State.die);
 
             soundPlayer = new Sound();
@@ -131,7 +145,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
     public RectF getCollisionRect() {
         if(state == Enemy.State.die) return new RectF(0,0,0,0);
 
-        return dstRect;
+        return collisionRect;
     }
 
 }

@@ -33,8 +33,6 @@ public class MainScene extends Scene {
         this.context = context;
         initLayers(Layer.COUNT);
 
-
-
         currentStage = 1;
         nextStageToggle = true;
 
@@ -79,7 +77,7 @@ public class MainScene extends Scene {
             }
         }));
 
-        add(Layer.touch, new Button(R.mipmap.catchmonster_cheatingbutton, 16.0f , 1.5f, 0.8f, 0.8f, new Button.Callback() {
+        add(Layer.touch, new Button(R.mipmap.catchmonster_cheatingbutton, 16.f , 1.5f, 0.5f, 0.5f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
                 StageOneStart();
@@ -89,7 +87,7 @@ public class MainScene extends Scene {
                 return true;
             }
         }));
-        add(Layer.touch, new Button(R.mipmap.catchmonster_cheatingbutton, 17.5f , 1.5f, 0.8f, 0.8f, new Button.Callback() {
+        add(Layer.touch, new Button(R.mipmap.catchmonster_cheatingbutton, 17.f , 1.5f, 0.5f, 0.5f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
                 StageTwoStart();
@@ -98,7 +96,7 @@ public class MainScene extends Scene {
                 return true;
             }
         }));
-        add(Layer.touch, new Button(R.mipmap.catchmonster_cheatingbutton, 19.f , 1.5f, 0.8f, 0.8f, new Button.Callback() {
+        add(Layer.touch, new Button(R.mipmap.catchmonster_cheatingbutton, 18.f , 1.5f, 0.5f, 0.5f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
                 StageThreeStart();
