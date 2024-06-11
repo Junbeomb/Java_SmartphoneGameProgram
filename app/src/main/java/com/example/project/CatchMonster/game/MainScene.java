@@ -21,7 +21,7 @@ public class MainScene extends Scene {
     private float nextStageDelayCurrent = 0.f;
     private float nextStageDelay = 3.f;
 
-    public int remainMonster;
+    public static int remainMonster;
 
     private Sound soundPlayer;
     private SoundBG soundBg;
@@ -182,11 +182,11 @@ public class MainScene extends Scene {
         add(Layer.trap1, new Trap1(3.5f,0.5f));
         add(Layer.trap1, new Trap1(5.5f,0.5f));
 
-        int monsterCount = 1;
-        for(int i=0;i<monsterCount;i++){
-            add(Layer.enemy, new Enemy(R.mipmap.catchmonster_monster1,this,context));
-        }
+        int monsterCount = 4;
         remainMonster = monsterCount;
+        for(int i=0;i<monsterCount;i++){
+            add(Layer.enemy, new Enemy(R.mipmap.catchmonster_monster1,this,context,i*5,i%2));
+        }
     }
 
 
@@ -204,9 +204,9 @@ public class MainScene extends Scene {
         add(Layer.trap1, new Trap1(3.5f,0.5f));
         add(Layer.trap1, new Trap1(15.5f,0.5f));
 
-        int monsterCount = 1;
+        int monsterCount = 3;
         for(int i=0;i<monsterCount;i++){
-            add(Layer.enemy2, new Enemy2(R.mipmap.catchmonster_monster2,this,player, context));
+            add(Layer.enemy2, new Enemy2(R.mipmap.catchmonster_monster2,this,player, context,i * 5, i%2));
         }
         remainMonster = monsterCount;
     }

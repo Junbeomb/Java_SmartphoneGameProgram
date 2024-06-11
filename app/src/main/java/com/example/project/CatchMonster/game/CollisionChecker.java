@@ -46,8 +46,10 @@ public class CollisionChecker implements IGameObject {
                     for(int sb = swordboxs.size()-1;sb>=0;sb--){
                         SwordBox tempSb = (SwordBox)swordboxs.get(sb);
                         if(CollisionHelper.collides(enemy,tempSb)){
-                            enemy.receiveDamage(20.f,enemy.dx - tempSb.currentX);
-                            tempSb.removeCollision(R.mipmap.catchmonster_herohiteffect,scene,enemy.dx);
+                            if(enemy.state != Enemy.State.die){
+                                tempSb.removeCollision(R.mipmap.catchmonster_herohiteffect,scene,enemy.dx);
+                                enemy.receiveDamage(20.f,enemy.dx - tempSb.currentX);
+                            }
                             break;
                         }
                     }
@@ -102,9 +104,10 @@ public class CollisionChecker implements IGameObject {
                     for(int sb = swordboxs.size()-1;sb>=0;sb--){
                         SwordBox tempSb = (SwordBox)swordboxs.get(sb);
                         if(CollisionHelper.collides(enemy2,tempSb)){
-                            enemy2.receiveDamage(20.f);
-                            tempSb.removeCollision(R.mipmap.catchmonster_herohiteffect,scene,enemy2.dx);
-                            //scene.remove(MainScene.Layer.enemy, enemy);
+                            if(enemy2.state != Enemy2.State.die) {
+                                enemy2.receiveDamage(10.f);
+                                tempSb.removeCollision(R.mipmap.catchmonster_herohiteffect, scene, enemy2.dx);
+                            }
                             break;
                         }
                     }
@@ -149,7 +152,7 @@ public class CollisionChecker implements IGameObject {
                     for(int sb = swordboxs.size()-1;sb>=0;sb--){
                         SwordBox tempSb = (SwordBox)swordboxs.get(sb);
                         if(CollisionHelper.collides(enemy3,tempSb)){
-                            enemy3.receiveDamage(20.f,tempSb);
+                            enemy3.receiveDamage(5.f,tempSb);
                             tempSb.removeCollision(R.mipmap.catchmonster_herohiteffect,scene,tempSb.currentX);
                             //scene.remove(MainScene.Layer.enemy, enemy);
                             break;

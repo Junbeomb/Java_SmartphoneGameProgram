@@ -56,7 +56,7 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
         }
         return rects;
     }
-    public Enemy2(int imageId, MainScene scene, Player player, Context context) {
+    public Enemy2(int imageId, MainScene scene, Player player, Context context, float nowX, float direction) {
         super(imageId, 8);
         this.scene = scene;
         this.player = player;
@@ -68,9 +68,18 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
         this.context = context;
         fixCollisionRect();
 
-        speed = (float)Math.random();
-        if(speed > 0.5f) speed = -0.02f;
-        else speed = 0.02f;
+//        speed = (float)Math.random();
+//        if(speed > 0.5f) speed = -0.02f;
+//        else speed = 0.02f;
+
+        if(direction > 0.5){
+            speed = -0.02f;
+        }
+        else{
+            speed=0.02f;
+        }
+
+        dx = nowX;
 
         setPosition(dx, 6.5f, 2.0f, 2.0f);
         srcRects = makeRects(200);

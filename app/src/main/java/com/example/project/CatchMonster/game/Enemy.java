@@ -16,18 +16,17 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
     protected Enemy.State state = Enemy.State.idle;
     protected float dx = 5.f;
 
-    protected MainScene scene;
+    protected static MainScene scene;
     protected int maxHp = 3;
     protected int currentHp;
 
     protected float spawnWaitingTime;
     protected float spawnCurrentTime;
-    protected static float speed;
+    protected float speed;
     private Context context;
     private Sound soundPlayer;
     private RectF collisionRect = new RectF();
 
-    private float knockbackDirection;
     protected Rect[][] srcRectsArray = {
             makeRects(100), // State.idle
             makeRects(100, 101, 102, 103), // State.walk
@@ -49,7 +48,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         }
         return rects;
     }
-    public Enemy(int imageId, MainScene scene, Context context) {
+    public Enemy(int imageId, MainScene scene, Context context,float nowX,float direction) {
         super(imageId, 8);
         this.scene = scene;
         currentHp = maxHp;
@@ -58,10 +57,18 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
         spawnWaitingTime = 2.f;
         setState(State.idle);
 
-        speed = (float)Math.random();
-        if(speed > 0.5f) speed = -0.03f;
-        else speed = 0.03f;
+//        speed = (float)Math.random();
+//        if(speed > 0.5f) speed = -0.03f;
+//        else speed = 0.03f;
 
+        if(direction > 0.5){
+            speed = -0.03f;
+        }
+        else{
+            speed=0.03f;
+        }
+
+        dx = nowX;
         setPosition(dx, 6.5f, 2.0f, 2.0f);
         srcRects = makeRects(100);
     }
@@ -137,7 +144,8 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
             soundPlayer.playSound(context, R.raw.enemy1death,1);
 
             srcRects = makeRects(200, 201, 202, 203, 204, 205, 206, 207);
-            this.scene.remainMonster =this.scene.remainMonster -1;
+
+            this.scene.remainMonster -= 1;
         }
     }
 
