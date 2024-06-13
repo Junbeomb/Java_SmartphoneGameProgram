@@ -3,9 +3,7 @@
 ### **게임 이름** : Catch monster if you can  
 
 ### 게임 컨셉  
-+ 지하 던전에 갇혀 버린 주인공  
 + 장애물을 피하고 몬스터를 잡아서 던전을 탈출하는 게임  
-+ 어두운 분위기의 게임으로 컨트롤을 요구함  
 + 비슷한 장르의 게임 : Hollow Knight  
   ![image](https://github.com/Junbeomb/SmartphoneGameProgram/assets/87471961/13ddcffb-8e6f-40e9-ab93-2dd14e3707bb)
   
