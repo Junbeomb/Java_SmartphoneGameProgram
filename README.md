@@ -6,22 +6,24 @@
 + 장애물을 피하고 몬스터를 잡아서 던전을 탈출하는 게임  
 + 비슷한 장르의 게임 : Hollow Knight  
   ![image](https://github.com/Junbeomb/SmartphoneGameProgram/assets/87471961/13ddcffb-8e6f-40e9-ab93-2dd14e3707bb)
-  
+
+## 총 3개의 스테이지로 구성
+
 ## Stage1  
   #### 근접 몬스터 
   + 닿으면 데미지를 입음
-  + 타격을 가할 수록 빨라짐
-  + 총 3단계로 구성
+  + 타격을 가할 수록 빨라짐  
   <img width="540" height="300" alt="image" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/1d904f40-e830-4fb0-a2f1-73a7f0f0ec4a">
   
   #### 장애물
-  + 랜덤한 시간이 지나면 떨어짐
+  + 랜덤한 시간이 지나면 떨어짐  
+  + 플레이어가 다가오면 떨어지는 것으로 기획했으나, 더 자연스러운 효과를 위해 랜덤 시간 부여 
   <img width="540" height="80" alt="image" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/2b10c3c8-89ca-4f72-8277-f5f34d7cbf00">
   
 ## Stage2
   #### 원거리 몬스터
   + 일정 거리 다가오면 공격
-  + 튕겨내기 가능
+  + 몬스터의 발사체를 플레이어의 공격으로 튕겨내기 가능
   <img width="400" height="300" alt="image" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/e36da472-adfa-4018-b9de-79955d28a989">
   <img width="400" height="300" alt="image" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/41b5fdc3-c5a3-480d-b551-6d3e97faa385">
   
@@ -58,13 +60,14 @@
 
 ## 참고, 수업내용에서 차용한 것, 개발한 것
   + MainScene, CollisionChecker, SheetSprite 등 수업 자료를 기반으로 개발
-    + MainScene에 object를 추가하고 삭제하는 방식으로 stage 변경 및 몬스터 관리  
+    + MainScene에 object를 추가하고 삭제하는 방식으로 stage 변경 및 몬스터 관리
+    + enum을 사용해 몬스터 상태 관리
     <img width="600" height="500" alt="개발 일정" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/97e733b0-88ae-4d14-b25d-6359ba7147c3">
     
     + Sprite 이미지를 사용해 애니메이션 제작  
     <img width="800" height="300" alt="개발 일정" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/1d69bb42-a41c-410c-8687-ec0225181f76">
     
-  + Boss & 몬스터 알고리즘
+  + Boss 알고리즘
     + Boss 스킬 랜덤으로 골고루 사용하도록 조절
     <img width="800" height="300" alt="개발 일정" src="https://github.com/Junbeomb/Java_SmartphoneGameProgram/assets/87471961/459a6e62-fdf1-42af-80a7-e25f5e7816cb">
 
