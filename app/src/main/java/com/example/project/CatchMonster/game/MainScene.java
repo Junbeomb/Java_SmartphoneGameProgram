@@ -111,7 +111,6 @@ public class MainScene extends Scene {
         return Layer.touch.ordinal();
     }
 
-
     @Override
     public void update(float elapsedSeconds) {
 

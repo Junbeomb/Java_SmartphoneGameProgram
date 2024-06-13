@@ -41,10 +41,7 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
             int l = (idx % 100) * 100;
             int t = ((idx/100)-1) * 100;
 
-            if(speed <= 0.f)
-                rects[i] = new Rect(l , t, l+100, t + 100);
-            else
-                rects[i] = new Rect(l+100, t, l, t + 100);
+            rects[i] = new Rect(l , t, l+100, t + 100);
         }
         return rects;
     }
@@ -95,13 +92,22 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
                 break;
             case walk:
                 if(currentHp == 3){
-                    srcRects = makeRects(100, 101, 102, 103);
+                    if(speed < 0)
+                        srcRects = makeRects(100, 101, 102, 103);
+                    else
+                        srcRects = makeRects(503, 502, 501, 500);
                 }
                 else if(currentHp == 2){
-                    srcRects = makeRects(300, 301, 302, 303);
+                    if(speed < 0)
+                        srcRects = makeRects(300, 301, 302, 303);
+                    else
+                        srcRects = makeRects(603, 602, 601, 600);
                 }
                 else if(currentHp == 1){
-                    srcRects = makeRects(400, 401, 402, 403);
+                    if(speed < 0)
+                        srcRects = makeRects(400, 401, 402, 403);
+                    else
+                        srcRects = makeRects(703, 702, 701, 700);
                 }
 
                 if(speed > 0.f){
@@ -143,7 +149,12 @@ public class Enemy extends SheetSprite implements IBoxCollidable{
             soundPlayer = new Sound();
             soundPlayer.playSound(context, R.raw.enemy1death,1);
 
-            srcRects = makeRects(200, 201, 202, 203, 204, 205, 206, 207);
+            if(speed < 0) {
+                srcRects = makeRects(200, 201, 202, 203, 204, 205, 206, 207);
+            }
+            else {
+                srcRects = makeRects(807, 806, 805, 804, 803, 802, 801, 800);
+            }
 
             this.scene.remainMonster -= 1;
         }

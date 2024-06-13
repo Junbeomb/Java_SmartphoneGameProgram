@@ -47,12 +47,8 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
             int l = (idx % 200) * 200;
             int t = ((idx/200)-1) * 200;
 
-            if(speed > 0.f){
-                rects[i] = new Rect(l , t, l+200, t + 200);
-            }
-            else{
-                rects[i] = new Rect(l+200, t, l, t + 200);
-            }
+            rects[i] = new Rect(l , t, l+200, t + 200);
+
         }
         return rects;
     }
@@ -113,7 +109,13 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
                     }
                 }
 
-                srcRects = makeRects(200, 201, 202, 203,204,205);
+                if(speed > 0){
+                    srcRects = makeRects(200, 201, 202, 203,204,205);
+                }
+                else{
+                    srcRects = makeRects(1005, 1004, 1003, 1002, 1001, 1000);
+                }
+
                 //아니면 좌우로 이동
                 if(speed > 0.f){
                     dx = dx + (float) speed * elapsedSeconds * 60;
@@ -146,10 +148,22 @@ public class Enemy2 extends SheetSprite implements IBoxCollidable{
                 }
 
                 if(CurrentTime <= 2.0f){
-                    srcRects = makeRects(200, 201, 202, 203,204,205);
+                    if(speed > 0){
+                        srcRects = makeRects(200, 201, 202, 203,204,205);
+                    }
+                    else{
+                        srcRects = makeRects(1005, 1004, 1003, 1002, 1001, 1000);
+                    }
                 }
                 else if(CurrentTime > 2.0f){
-                    srcRects = makeRects(401,403,404,404);
+                    if(speed>0){
+                        srcRects = makeRects(401,403,404,404);
+
+                    }
+                    else{
+                        srcRects = makeRects(1203,1201,1200,1200);
+
+                    }
                 }
 
                 break;

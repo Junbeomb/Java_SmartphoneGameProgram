@@ -51,12 +51,8 @@ public class Player extends SheetSprite implements IBoxCollidable {
             int l = (idx % 100) * 100;
             int t = ((idx/100)-1) * 100;
 
-            if(heroSpeed > 0.f){
-                rects[i] = new Rect(l, t, l + 100, t + 90);
-            }
-            else{
-                rects[i] = new Rect(l+100 , t, l, t + 90);
-            }
+            rects[i] = new Rect(l, t, l + 100, t + 90);
+
         }
         return rects;
     }
@@ -79,10 +75,15 @@ public class Player extends SheetSprite implements IBoxCollidable {
 
         switch(state){
             case idle:
-                srcRects = makeRects(100);
+                if(heroSpeed < 0.f){
+                    srcRects = makeRects(506);
+                }
+                else{
+                    srcRects = makeRects(100);
+                }
                 break;
             case goLeft:
-                srcRects = makeRects(101, 103, 105);
+                srcRects = makeRects(505, 503, 501);
                 heroSpeed = -0.1f;
                 dx = dx + heroSpeed * elapsedSeconds * 60;
                 setPosition(dx, 6.5f, 2.0f, 2.0f);
@@ -95,7 +96,12 @@ public class Player extends SheetSprite implements IBoxCollidable {
                 break;
             case attack:
                 attackTime = attackTime + elapsedSeconds;
-                srcRects = makeRects(200, 201, 202, 203, 204);
+                if(heroSpeed < 0.f){
+                    srcRects = makeRects(604, 603, 602, 601, 600);
+                }
+                else{
+                    srcRects = makeRects(200, 201, 202, 203, 204);
+                }
                 if(attackTime > 0.2f){
                     attackTime = 0.f;
                     setState(State.idle);
@@ -104,7 +110,12 @@ public class Player extends SheetSprite implements IBoxCollidable {
             case hurt:
                 hurtTime = hurtTime + elapsedSeconds;
                 //Log.d(TAG, "Collision !!");
-                srcRects = makeRects(204,205);
+                if(heroSpeed < 0.f){
+                    srcRects = makeRects(600,605);
+                }
+                else{
+                    srcRects = makeRects(204,205);
+                }
                 if(hurtTime > 0.5f){
                     invincibility = true;//무적 상태 변환
                     hurtTime = 0.f;
