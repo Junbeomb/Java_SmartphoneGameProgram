@@ -1,7 +1,10 @@
 # SmartphoneGameProgram  
 2019184013 박준범    
 ### **게임 이름** : Catch monster if you can  
-
+##
+### 영상  
+https://www.youtube.com/watch?v=j5KGVvcXRXA&t=5s
+## 
 ### 게임 컨셉  
 + 장애물을 피하고 몬스터를 잡아서 던전을 탈출하는 게임  
 + 비슷한 장르의 게임 : Hollow Knight  
